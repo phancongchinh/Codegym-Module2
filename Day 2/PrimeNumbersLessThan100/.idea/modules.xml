@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/IsPrime.iml" filepath="$PROJECT_DIR$/IsPrime.iml" />
+      <module fileurl="file://$PROJECT_DIR$/PrimeNumbersLessThan100.iml" filepath="$PROJECT_DIR$/PrimeNumbersLessThan100.iml" />
     </modules>
   </component>
 </project>
