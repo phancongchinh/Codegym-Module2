@@ -3,9 +3,11 @@ import java.util.Scanner;
 import java.time.LocalDate;
 
 public class Hotel {
-    static final String DOB = "day of birth";
-    static final String DOCI = "day of checking in";
-    static final String DOCO = "day of checking out";
+
+    static final String DOB = "day of birth:";
+    static final String DCI = "day of checking in:";
+    static final String DCO = "day of checking out:";
+
     static Scanner sc = new Scanner(System.in);
     static Guest[] guests = new Guest[0];
 
@@ -14,39 +16,49 @@ public class Hotel {
     }
 
     public static void selectInMainMenu() {
-        int choice = -1;
+        int choice;
         do {
             drawMainMenu();
             choice = sc.nextInt();
+            int idNumber;
             switch (choice) {
                 case 1:
+                    System.out.println("Adding a new guest!");
                     guests = addGuest(guests);
                     Sort.sortByName(guests);
                     System.out.println("Guest list after adding a new guest:");
                     showGuestList(guests);
                     break;
                 case 2:
+                    System.out.println("Enter guest's ID number to display guest's information!");
                     showGuest(requestIdNumber(), guests);
                     break;
                 case 3:
-                    editGuest(requestIdNumber(), guests);
-                    Sort.sortByName(guests);
-                    System.out.println("Guest list after editing:");
-                    showGuestList(guests);
+                    System.out.println("Enter guest's ID number to edit guest's information!");
+                    idNumber = requestIdNumber();
+                    editGuest(idNumber, guests);
                     break;
                 case 4:
+                    System.out.println("Enter guest's ID number to delete guest information!");
                     guests = deleteGuest(requestIdNumber(), guests);
                     System.out.println("Guest list after deleting a guest:");
                     showGuestList(guests);
                     break;
                 case 5:
-                    int idNumber = requestIdNumber();
-                    showGuest(idNumber,guests);
-                    int index = searchGuest(idNumber,guests);
-                    Guest theGuest = guests[index];
-                    long stayingTime = ChronoUnit.DAYS.between(theGuest.getDateOfCheckingIn(),theGuest.getDateOfCheckingOut());
+                    idNumber = requestIdNumber();
+                    Guest theGuest = guests[searchById(idNumber, guests)];
+                    System.out.println(theGuest.toString());
+                    long stayingTime = ChronoUnit.DAYS.between(theGuest.getDateOfCheckingIn(), theGuest.getDateOfCheckingOut());
                     System.out.println("Staying time: " + stayingTime + " days.");
-                    System.out.println("Money = " + stayingTime * theGuest.getRoomPrice());
+                    System.out.println("Money: $" + stayingTime * theGuest.getRoomPrice() + ".");
+                    guests = deleteGuest(idNumber, guests);
+                    if (guests.length == 0) {
+                        System.out.println("There's no guest in the hotel!");
+                    } else {
+                        System.out.println("Guest list after deleting the guest that have just checked out:");
+                        showGuestList(guests);
+                    }
+
                     break;
                 case 0:
                     System.exit(0);
@@ -76,23 +88,13 @@ public class Hotel {
         return sc.nextInt();
     }
 
-    public static boolean isIdNumberExisted(int newId) {
-        for (Guest guest : guests) {
-            if (guest.getIdNumber() == newId) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public static LocalDate requestDate(String dateDescription) {
-        sc.nextLine();
-        System.out.println("Enter " + dateDescription + " (yyyy/mm/dd):");
-        String dateString = sc.nextLine();
-        int year = Integer.parseInt(dateString.substring(0,4));
-        int month = Integer.parseInt(dateString.substring(5,7));
-        int day = Integer.parseInt(dateString.substring(8,10));
-        return LocalDate.of(year,month,day);
+        System.out.print("Enter " + dateDescription + " (dd/mm/yyyy): ");
+        String dateString = sc.next();
+        int day = Integer.parseInt(dateString.substring(0, 2));
+        int month = Integer.parseInt(dateString.substring(3, 5));
+        int year = Integer.parseInt(dateString.substring(6, 10));
+        return LocalDate.of(year, month, day);
     }
 
     public static char requestRoomLevel() {
@@ -113,25 +115,26 @@ public class Hotel {
         newGuests[guests.length].setName(requestName());
         //Check if the entered ID number is existed or not!
         int newId = requestIdNumber();
-        if (isIdNumberExisted(newId)) {
+        if (searchById(newId, guests) != -1) {
             System.out.println("Id number existed! Add guest canceled!");
             return guests;
         }
         newGuests[guests.length].setIdNumber(newId);
-        newGuests[guests.length].setDateOfCheckingIn(requestDate(DOCI));
-        newGuests[guests.length].setDateOfCheckingOut(requestDate(DOCO));
+        sc.nextLine();
+        newGuests[guests.length].setDateOfCheckingIn(requestDate(DCI));
+        newGuests[guests.length].setDateOfCheckingOut(requestDate(DCO));
         newGuests[guests.length].setRoomLevel(requestRoomLevel());
         return newGuests;
     }
 
     public static void showGuest(int idNum, Guest[] guests) {
         String guestToString;
-        int searchById = searchGuest(idNum, guests);
-        guestToString = (searchById == -1) ? "Guest not found!" : guests[searchById].toString();
+        int index = searchById(idNum, guests);
+        guestToString = (index == -1) ? "Guest not found!" : guests[index].toString();
         System.out.println(guestToString);
     }
 
-    public static int searchGuest(int idNum, Guest[] guests) {
+    public static int searchById(int idNum, Guest[] guests) {
         int index = -1;
         for (int i = 0; i < guests.length; i++) {
             if (guests[i].getIdNumber() == idNum) {
@@ -142,29 +145,29 @@ public class Hotel {
     }
 
     public static void editGuest(int idNum, Guest[] guests) {
-        int index = searchGuest(idNum, guests);
+        int index = searchById(idNum, guests);
         if (index == -1) {
             System.out.println("Guest not found!");
         } else {
-            int choice = -1;
+            int choice;
             do {
                 drawEditMenu();
                 choice = sc.nextInt();
                 switch (choice) {
                     case 1:
-                        editName(index,requestName());
+                        editName(index, requestName());
                         break;
                     case 2:
-                        editIdNumber(index,requestIdNumber());
+                        editIdNumber(index, requestIdNumber());
                         break;
                     case 3:
-                        editDate(index,DOB,requestDate(DOB));
+                        editDate(index, DOB, requestDate(DOB));
                         break;
                     case 4:
-                        editDate(index,DOCI,requestDate(DOCI));
+                        editDate(index, DCI, requestDate(DCI));
                         break;
                     case 5:
-                        editDate(index,DOCO,requestDate(DOCO));
+                        editDate(index, DCO, requestDate(DCO));
                         break;
                     case 0:
                         selectInMainMenu();
@@ -196,10 +199,10 @@ public class Hotel {
             case DOB:
                 guests[index].setDateOfBirth(newLocalDate);
                 break;
-            case DOCI:
+            case DCI:
                 guests[index].setDateOfCheckingIn(newLocalDate);
                 break;
-            case DOCO:
+            case DCO:
                 guests[index].setDateOfCheckingOut(newLocalDate);
                 break;
         }
@@ -207,18 +210,14 @@ public class Hotel {
 
     public static Guest[] deleteGuest(int idNum, Guest[] guests) {
         Guest[] newGuests = new Guest[guests.length - 1];
-        int searchById = searchGuest(idNum, guests);
-        if (searchById == -1) {
+        int index = searchById(idNum, guests);
+        if (index == -1) {
             System.out.println("Guest not found!");
-            newGuests = guests;
+            return guests;
         } else {
-            for (int i = 0; i < searchById; i++) {
-                newGuests[i] = guests[i];
-            }
-            for (int i = searchById; i < newGuests.length; i++) {
-                newGuests[i] = guests[i + 1];
-            }
+            System.arraycopy(guests, 0, newGuests, 0, index);
+            System.arraycopy(guests, index + 1, newGuests, index, guests.length - index - 1);
+            return newGuests;
         }
-        return newGuests;
     }
 }

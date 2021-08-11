@@ -83,12 +83,13 @@ public class Guest {
     @Override
     public String toString() {
         return "Guest{" +
-                "name='" + name + '\'' +
-                ", idNumber=" + idNumber +
-                ", dateOfBirth=" + dateOfBirth +
-                ", dateOfCheckingIn=" + dateOfCheckingIn +
-                ", dateOfCheckingOut=" + dateOfCheckingOut +
-                ", roomLevel=" + roomLevel +
+                "name='" + this.getName() + '\'' +
+                ", idNumber=" + this.getIdNumber() +
+                ", dateOfBirth=" + this.getDateOfBirth() +
+                ", dateOfCheckingIn=" + this.getDateOfCheckingOut() +
+                ", dateOfCheckingOut=" + this.getDateOfCheckingOut() +
+                ", stayingDays=" + this.getStayingDays() +
+                ", roomLevel=" + this.getRoomLevel() +
                 '}';
     }
 }
