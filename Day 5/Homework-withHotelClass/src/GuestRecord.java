@@ -13,10 +13,6 @@ public class GuestRecord {
         return dateOfCheckingIn;
     }
 
-    public LocalDate getDateOfCheckingOut() {
-        return dateOfCheckingOut;
-    }
-
     public String getRoomLevel() {
         return roomLevel;
     }
@@ -46,7 +42,6 @@ public class GuestRecord {
     public String toString() {
         return information.toString() +
                 ", DCI: " + this.getDateOfCheckingIn() +
-                ", DCO: " + this.getDateOfCheckingOut() +
                 ", RLV: " + this.getRoomLevel();
     }
 
