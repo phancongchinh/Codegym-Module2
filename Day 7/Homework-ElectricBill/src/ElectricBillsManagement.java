@@ -8,9 +8,9 @@ public class ElectricBillsManagement {
     public void addBill() {
         ElectricBill[] newElectricBills = new ElectricBill[electricBills.length + 1];
         System.arraycopy(electricBills, 0, newElectricBills, 0, electricBills.length);
-        Customer customer = Main.requestCustomer();
-        int previousReading = Main.requestInt(cst.PR);
-        int currentReading = Main.requestInt(cst.CR);
+        Customer customer = requestCustomer();
+        int previousReading = requestInt(cst.PR);
+        int currentReading = requestInt(cst.CR);
         while(currentReading < previousReading) {
             System.out.print(cst.INPUT_INVALID);
             currentReading = scanner.nextInt();
@@ -44,20 +44,20 @@ public class ElectricBillsManagement {
             switch (choice) {
                 case 1:
                     scanner.nextLine();
-                    String newName = Main.requestString(cst.NEW_NAME);
+                    String newName = requestString(cst.NEW_NAME);
                     theBill.getCustomer().setName(newName);
                     Main.management.sortByName();
                     break;
                 case 2:
                     scanner.nextLine();
-                    theBill.getCustomer().setAddress(Main.requestString(cst.NEW_ADD));
+                    theBill.getCustomer().setAddress(requestString(cst.NEW_ADD));
                     break;
                 case 3:
                     System.out.println(cst.TURN_BACK);
-                    theBill.getCustomer().setMeterCode(Main.requestInt(cst.NEW_METER_CODE));
+                    theBill.getCustomer().setMeterCode(requestInt(cst.NEW_METER_CODE));
                     return;
                 case 4:
-                    int newPreviousReading = Main.requestInt(cst.NEW_PR);
+                    int newPreviousReading = requestInt(cst.NEW_PR);
                     while (newPreviousReading > theBill.getCurrentReading()) {
                         System.out.print(cst.INPUT_INVALID);
                         newPreviousReading = scanner.nextInt();
@@ -65,7 +65,7 @@ public class ElectricBillsManagement {
                     theBill.setPreviousReading(newPreviousReading);
                     break;
                 case 5:
-                    int newCurrentReading = Main.requestInt(cst.NEW_CR);
+                    int newCurrentReading = requestInt(cst.NEW_CR);
                     while (newCurrentReading < theBill.getPreviousReading()) {
                         System.out.print(cst.INPUT_INVALID);
                         newCurrentReading = scanner.nextInt();
@@ -105,4 +105,31 @@ public class ElectricBillsManagement {
     public void sortByName() {
         Arrays.sort(electricBills);
     }
+
+    public String requestString(String description) {
+        System.out.print("\tEnter " + description + ": ");
+        return scanner.nextLine();
+    }
+
+    public int requestInt(String description) {
+        System.out.print("\tEnter " + description + ": ");
+        int inputInt = scanner.nextInt();
+        while (inputInt < 0) {
+            System.out.print(cst.INPUT_INVALID);
+            inputInt = scanner.nextInt();
+        }
+        return inputInt;
+    }
+
+    public Customer requestCustomer() {
+        String name = requestString(cst.NAME);
+        String address = requestString(cst.ADD);
+        int meterCode = requestInt(cst.METER_CODE);
+        while (Main.management.doesExist(meterCode)) {
+            System.out.println(cst.EXISTED);
+            meterCode = requestInt(cst.METER_CODE);
+        }
+        return new Customer(name, address, meterCode);
+    }
+
 }

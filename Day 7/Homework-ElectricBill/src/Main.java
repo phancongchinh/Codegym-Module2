@@ -22,7 +22,7 @@ public class Main {
                     break;
                 case 2:
                     System.out.println(cst.DISPLAYING);
-                    meterCode = requestInt(cst.METER_CODE);
+                    meterCode = management.requestInt(cst.METER_CODE);
                     while (!management.doesExist(meterCode)) {
                         System.out.print(cst.NOT_EXISTED);
                         meterCode = scanner.nextInt();
@@ -31,7 +31,7 @@ public class Main {
                     break;
                 case 3:
                     System.out.println(cst.EDITING);
-                    meterCode = requestInt(cst.METER_CODE);
+                    meterCode = management.requestInt(cst.METER_CODE);
                     ElectricBill electricBill = management.electricBills[management.searchByMeterCode(meterCode)];
                     while (!management.doesExist(meterCode)) {
                         System.out.print(cst.NOT_EXISTED);
@@ -44,7 +44,7 @@ public class Main {
                     break;
                 case 4:
                     System.out.println(cst.DELETING);
-                    meterCode = requestInt(cst.METER_CODE);
+                    meterCode = management.requestInt(cst.METER_CODE);
                     while (!management.doesExist(meterCode)) {
                         System.out.print(cst.NOT_EXISTED);
                         meterCode = scanner.nextInt();
@@ -87,31 +87,5 @@ public class Main {
         System.out.println("\t 0. Back to MAIN MENU!");
         System.out.println("------------------------------------------------------------------------");
         System.out.print(cst.MAKE_CHOICE);
-    }
-
-    public static String requestString(String description) {
-        System.out.print("\tEnter " + description + ": ");
-        return scanner.nextLine();
-    }
-
-    public static int requestInt(String description) {
-        System.out.print("\tEnter " + description + ": ");
-        int inputInt = scanner.nextInt();
-        while (inputInt < 0) {
-            System.out.print(cst.INPUT_INVALID);
-            inputInt = scanner.nextInt();
-        }
-        return inputInt;
-    }
-
-    public static Customer requestCustomer() {
-        String name = requestString(cst.NAME);
-        String address = requestString(cst.ADD);
-        int meterCode = requestInt(cst.METER_CODE);
-        while (management.doesExist(meterCode)) {
-            System.out.println(cst.EXISTED);
-            meterCode = requestInt(cst.METER_CODE);
-        }
-        return new Customer(name, address, meterCode);
     }
 }
