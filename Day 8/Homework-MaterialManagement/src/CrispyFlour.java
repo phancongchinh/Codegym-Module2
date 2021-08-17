@@ -49,7 +49,7 @@ public class CrispyFlour extends Material {
         return "Meat { " +
                 super.toString() +
                 ", EXP: " + getExpiredDate() +
-                ", quantity: " + quantity +
+                ", quantity: " + getQuantity() +
                 ", discount: " + getDiscount() * 100 + "%" +
                 ", sale price: " + getSalePrice() +
                 " }";

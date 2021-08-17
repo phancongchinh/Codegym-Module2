@@ -2,7 +2,8 @@ import java.time.LocalDate;
 import java.util.Scanner;
 
 public class Management {
-    Material[] materials = new Material[0];
+    private Material[] materials = new Material[0];
+    Scanner scanner = Main.scanner;
 
     public void addMaterial(Material newMaterial) {
         Material[] newMaterials = new Material[materials.length + 1];
@@ -27,7 +28,7 @@ public class Management {
         }
     }
 
-    public void editMaterial(String id, Scanner scanner) {
+    public void editMaterial(String id) {
         int index = searchById(id);
         int choice;
         do {

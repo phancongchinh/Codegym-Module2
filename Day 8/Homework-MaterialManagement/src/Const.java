@@ -5,7 +5,7 @@ public interface Const {
     String INVALID = "Input invalid! Enter another: ";
     String CURRENT_LIST = "Current material list: ";
     String EMPTY_LIST = "Material list currently empty!";
-    String CATEGORY = "material's category: ";
+    String CATEGORY = "material's category (\"meat\" or \"crispy flour\"): ";
     String MEAT = "meat";
     String CRISPY_FLOUR = "crispy flour";
     String NAME = "material's name: ";
@@ -20,7 +20,6 @@ public interface Const {
     String NEW_WEIGHT = "new material's weight: ";
     String QUANTITY = "material's quantity: ";
     String NEW_QUANTITY = "new material's quantity: ";
-
     String ADDING = "ADDING NEW MATERIAL!";
     String ADDED = "MATERIAL ADDED SUCCESSFULLY!";
     String DISPLAYING = "DISPLAYING MATERIAL! MATERIAL'S ID REQUIRED!";

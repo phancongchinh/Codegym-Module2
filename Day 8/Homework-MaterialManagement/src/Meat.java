@@ -49,7 +49,7 @@ public class Meat extends Material {
         return "Meat { " +
                 super.toString() +
                 ", EXP: " + getExpiredDate() +
-                ", weight: " + weight +
+                ", weight: " + getWeight() +
                 ", discount: " + getDiscount() * 100 + "%" +
                 ", sale price: " + getSalePrice() +
                 " }";

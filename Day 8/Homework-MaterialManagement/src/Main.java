@@ -39,7 +39,7 @@ public class Main {
                         System.out.println(Const.NOT_EXIST);
                         id = scanner.nextLine();
                     }
-                    management.editMaterial(id, scanner);
+                    management.editMaterial(id);
                     System.out.println(Const.EDITED);
                     System.out.println(Const.BACK);
                     break;
@@ -87,12 +87,15 @@ public class Main {
         String id = inputId();
         LocalDate mfg = inputMFG();
         int listPrice = inputListPrice();
-        if (category.compareTo(Const.MEAT) == 0) {
-            double weight = inputWeight();
-            return new Meat(name, id, mfg, listPrice, weight);
-        } else {
-            int quantity = inputQuantity();
-            return new Meat(name, id, mfg, listPrice, quantity);
+        switch (category) {
+            case Const.MEAT:
+                double weight = inputWeight();
+                return new Meat(name, id, mfg, listPrice, weight);
+            case Const.CRISPY_FLOUR:
+                double quantity = inputQuantity();
+                return new Meat(name, id, mfg, listPrice, quantity);
+            default:
+                return null;
         }
     }
 

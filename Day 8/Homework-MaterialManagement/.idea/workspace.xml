@@ -2,19 +2,57 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7304fbef-d7dd-4f20-b44f-25549b94a136" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Homework-MaterialManagement.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Const.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/CrispyFlour.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Discount.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Management.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Material.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Meat.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../NguyenHuynhDuc-MaterialManagement/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../NguyenHuynhDuc-MaterialManagement/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../NguyenHuynhDuc-MaterialManagement/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../NguyenHuynhDuc-MaterialManagement/.idea/runConfigurations.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../NguyenHuynhDuc-MaterialManagement/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Tennis/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Tennis/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Tennis/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Tennis/.idea/runConfigurations.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Tennis/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Tennis/Tennis.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Day 9/AbsoluteValue/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Day 9/AbsoluteValue/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Day 9/AbsoluteValue/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Day 9/AbsoluteValue/.idea/runConfigurations.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Day 9/AbsoluteValue/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Day 9/AbsoluteValue/AbsoluteValue.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Day 9/AbsoluteValue/src/AbsoluteValueCalculator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Day 9/AbsoluteValue/test/AbsoluteValueCalculatorTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Day 9/Simple Calculator/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Day 9/Simple Calculator/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Day 9/Simple Calculator/.idea/runConfigurations.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Day 9/Simple Calculator/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Day 9/Simple Calculator/Simple Calculator.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Day 9/TheNextDay/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Day 9/TheNextDay/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Day 9/TheNextDay/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Day 9/TheNextDay/.idea/runConfigurations.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Day 9/TheNextDay/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Day 9/TheNextDay/TheNextDay.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Day 9/TheNextDay/src/NextDayCalculator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Day 9/TheNextDay/test/NextDayCalculatorTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Day 9/TriangleClassification/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Day 9/TriangleClassification/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Day 9/TriangleClassification/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Day 9/TriangleClassification/.idea/runConfigurations.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Day 9/TriangleClassification/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Day 9/TriangleClassification/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Day 9/TriangleClassification/TriangleClassification.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Day 9/TriangleClassification/src/TriangleClassifier.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Day 9/TriangleClassification/test/TriangleClassifierTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Homework-MaterialManagement/Const.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Homework-MaterialManagement/Const.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Homework-MaterialManagement/CrispyFlour.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Homework-MaterialManagement/CrispyFlour.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Homework-MaterialManagement/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Homework-MaterialManagement/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Homework-MaterialManagement/Meat.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Homework-MaterialManagement/Meat.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Const.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Const.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/CrispyFlour.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/CrispyFlour.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Management.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Management.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Meat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Meat.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,6 +117,8 @@
       <option name="presentableId" value="Default" />
       <updated>1629074639741</updated>
       <workItem from="1629074642163" duration="28349000" />
+      <workItem from="1629106973903" duration="3059000" />
+      <workItem from="1629175126774" duration="2692000" />
     </task>
     <servers />
   </component>
@@ -95,6 +135,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
