@@ -1,0 +1,35 @@
+public class Const {
+    static final String NAME = "name";
+    static final String NEW_NAME = "new name";
+    static final String STUDENT_ID = "student ID";
+    static final String NEW_STUDENT_ID = "new student ID";
+    static final String CLASS_NAME = "class name";
+    static final String NEW_CLASS_NAME = "new class name";
+    static final String DATE_OF_BIRTH = "date of birth";
+    static final String NEW_DATE_OF_BIRTH = "new date of birth";
+    static final String CARD_NUMBER = "card number";
+    static final String NEW_CARD_NUMBER = "card number";
+    static final String BOOK_NUMBER = "book number";
+    static final String NEW_BOOK_NUMBER = "new book number";
+    static final String DATE_OF_BORROWING = "date of borrowing";
+    static final String NEW_DATE_OF_BORROWING = "new date of borrowing";
+    static final String BORROWING_TIME = "borrowing time";
+    static final String NEW_BORROWING_TIME = "new borrowing time";
+    static final String STUDENT_ID_EXISTED = "Student ID existed. Enter another: ";
+    static final String STUDENT_ID_NOT_EXIST = "Student ID does not exist! Enter another: ";
+    static final String CARD_NUMBER_EXISTED = "Card number existed! Enter another: ";
+    static final String BOOK_NUMBER_EXISTED = "Book number existed. Enter another: ";
+    static final String INVALID_BORROWING_TIME = "Invalid borrowing time. Enter another: ";
+    static final String INVALID_DATE_OF_BORROWING_TIME = "Invalid date of borrowing time. Enter another: ";
+    static final String MAKE_CHOICE = "Please make a choice: ";
+    static final String EMPTY_LIST = "The list is currently empty!";
+    static final String CURRENT_LIST = "Current list: ";
+    static final String ADDING = "ADDING NEW LIBRARY CARD!";
+    static final String ADDED = "LIBRARY CARD ADDED SUCCESSFULLY!";
+    static final String DISPLAYING = "DISPLAYING LIBRARY CARD! STUDENT'S ID REQUIRED!";
+    static final String EDITING = "EDITING A LIBRARY CARD! STUDENT'S ID REQUIRED!";
+    static final String EDITED = "LIBRARY CARD EDITED SUCCESSFULLY!";
+    static final String BACK = "TURNING BACK TO MAIN MENU!";
+    static final String DELETING = "DELETING A LIBRARY CARD! STUDENT'S ID REQUIRED!";
+    static final String DELETED = "LIBRARY CARD DELETED SUCCESSFULLY!";
+}
