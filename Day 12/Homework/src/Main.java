@@ -24,7 +24,7 @@ public class Main {
                     request(Const.STUDENT_ID);
                     id = scanner.nextInt();
                     while (!management.studentIdExisted(id)) {
-                        System.out.println(Const.STUDENT_ID_NOT_EXIST);
+                        System.out.print(Const.STUDENT_ID_NOT_EXIST);
                         id = scanner.nextInt();
                     }
                     management.display(id);
@@ -46,7 +46,7 @@ public class Main {
                     request(Const.STUDENT_ID);
                     id = scanner.nextInt();
                     while (!management.studentIdExisted(id)) {
-                        System.out.println(Const.STUDENT_ID_NOT_EXIST);
+                        System.out.print(Const.STUDENT_ID_NOT_EXIST);
                         id = scanner.nextInt();
                     }
                     management.delete(id);

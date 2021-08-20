@@ -86,12 +86,8 @@ public class LibraryManagement {
     }
 
     public void display(int studentId) {
-        if (!studentIdExisted(studentId)) {
-            System.out.print(Const.STUDENT_ID_NOT_EXIST);
-        } else {
-            int index = searchByStudentId(studentId);
-            System.out.println(libraryCards.get(index));
-        }
+        int index = searchByStudentId(studentId);
+        System.out.println(libraryCards.get(index));
     }
 
     public void displayAll() {
@@ -160,12 +156,8 @@ public class LibraryManagement {
     }
 
     public void delete(int studentId) {
-        if (!studentIdExisted(studentId)) {
-            System.out.print(Const.STUDENT_ID_NOT_EXIST);
-        } else {
-            int index = searchByStudentId(studentId);
-            libraryCards.remove(index);
-        }
+        int index = searchByStudentId(studentId);
+        libraryCards.remove(index);
     }
 
     public boolean studentIdExisted(int studentId) {
