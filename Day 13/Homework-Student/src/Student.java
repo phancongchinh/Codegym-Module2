@@ -1,4 +1,4 @@
-public class Student implements Comparable<Student> {
+public class Student {
     private int studentId;
     private String name;
     private String homeTown;
@@ -6,14 +6,6 @@ public class Student implements Comparable<Student> {
     private Double mark;
 
     public Student() {
-    }
-
-    public Student(int studentId, String name, String homeTown, String className, Double mark) {
-        this.studentId = studentId;
-        this.name = name;
-        this.homeTown = homeTown;
-        this.className = className;
-        this.mark = mark;
     }
 
     public int getStudentId() {
@@ -64,10 +56,5 @@ public class Student implements Comparable<Student> {
                 ", className: " + className +
                 ", mark: " + mark +
                 " }";
-    }
-
-    @Override
-    public int compareTo(Student student) {
-        return this.getName().compareTo(student.getName());
     }
 }

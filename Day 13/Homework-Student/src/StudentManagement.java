@@ -1,4 +1,3 @@
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -6,10 +5,15 @@ public class StudentManagement implements Const {
     private static final List<Student> studentList = new LinkedList<>();
     private static final MarkComparator markComparator = new MarkComparator();
     private static final IdComparator idComparator = new IdComparator();
+    private static final NameComparator nameComparator = new NameComparator();
 
     public void add() {
         Student student = initStudent();
         studentList.add(student);
+    }
+
+    public int getSize(){
+        return studentList.size();
     }
 
     public void display(int studentId) {
@@ -18,16 +22,9 @@ public class StudentManagement implements Const {
     }
 
     public void displayAll() {
-        if (studentList.size() == 0) {
-            System.out.println(EMPTY);
-        } else {
-            sortByName();
-            System.out.println(CURRENT);
-            for (int i = 0; i < studentList.size(); i++) {
-                System.out.println("Student " + (i + 1) + studentList.get(i));
-            }
+        for (int i = 0; i < studentList.size(); i++) {
+            System.out.println("Student " + (i + 1) + studentList.get(i));
         }
-
     }
 
     public void edit(int studentId) {
@@ -95,7 +92,7 @@ public class StudentManagement implements Const {
         request(STUDENT_ID);
         int studentId = scanner.nextInt();
         while (idExisted(studentId)) {
-            System.out.println(EXISTED);
+            System.out.print(EXISTED);
             studentId = scanner.nextInt();
         }
         return studentId;
@@ -129,10 +126,6 @@ public class StudentManagement implements Const {
         return searchByStudentId(studentId) != -1;
     }
 
-    protected void sortByName() {
-        Collections.sort(studentList);
-    }
-
     protected void sortById() {
         studentList.sort(idComparator);
     }
@@ -141,20 +134,24 @@ public class StudentManagement implements Const {
         studentList.sort(markComparator);
     }
 
+    protected void sortByName() {
+        studentList.sort(nameComparator);
+    }
+
     private int searchByStudentId(int studentId) {
         sortById();
         int left = 0;
-        int right = studentList.size();
+        int right = studentList.size() - 1;
         return binarySearch(studentId, left, right);
     }
 
-    private int binarySearch(int studentId, int left, int right) {
+    private int binarySearch(int studentId, int left, int right) { // binary search algorithm
         if (left <= right) {
             int mid = (left + right) / 2;
-            if (studentId == mid) {
+            if (studentId == studentList.get(mid).getStudentId()) {
                 return mid;
             }
-            if (studentId > mid) {
+            if (studentId > studentList.get(mid).getStudentId()) {
                 return binarySearch(studentId, mid + 1, right);
             } else {
                 return binarySearch(studentId, left, mid - 1);

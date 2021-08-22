@@ -14,8 +14,9 @@ public class Main implements Const {
                 case 1:
                     System.out.println(ADDING);
                     management.add();
-                    management.sortByName();
                     System.out.println(ADDED);
+                    System.out.println(CURRENT_BY_NAME);
+                    management.sortByName();
                     management.displayAll();
                     break;
                 case 2:
@@ -30,8 +31,14 @@ public class Main implements Const {
                     break;
                 case 3:
                     System.out.println(SORTED_BY_MARKS);
-                    management.sortByMark();
-                    management.displayAll();
+                    if (management.getSize() == 0) {
+                        System.out.println(EMPTY);
+                    } else {
+                        System.out.println(CURRENT_BY_MARK);
+                        management.sortByMark();
+                        management.displayAll();
+                    }
+                    management.sortByName();        // re-sort the list by name
                     break;
                 case 4:
                     System.out.println(EDITING);
@@ -71,7 +78,7 @@ public class Main implements Const {
         System.out.println("MAIN MENU!");
         System.out.println("\t 1. Add a new student!");
         System.out.println("\t 2. Display a student's information (Student ID required)!");
-        System.out.println("\t 3. Display student list sorted by mark!");
+        System.out.println("\t 3. Display student list sorted by mark (decreasing order)!");
         System.out.println("\t 4. Edit student's information (Student ID required)!");
         System.out.println("\t 5. Delete student's information (Student ID required)!");
         System.out.println("\t 0. Exit!");

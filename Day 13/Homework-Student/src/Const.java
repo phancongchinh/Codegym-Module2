@@ -1,6 +1,7 @@
 import java.util.Scanner;
 
 public interface Const {
+
     Scanner scanner = new Scanner(System.in);
 
     String NAME = "name";
@@ -18,7 +19,8 @@ public interface Const {
 
     String MAKE_CHOICE = "Please make a choice: ";
     String EMPTY = "The student list is empty!";
-    String CURRENT = "The current student list: ";
+    String CURRENT_BY_NAME = "The current student list, sorted by name: ";
+    String CURRENT_BY_MARK = "The current student list, sorted by mark: ";
     String ADDING = "ADDING A NEW STUDENT!";
     String ADDED = "STUDENT INFORMATION ADDED SUCCESSFULLY!";
     String DISPLAYING = "DISPLAYING STUDENT INFORMATION! STUDENT'S ID REQUIRED!";
