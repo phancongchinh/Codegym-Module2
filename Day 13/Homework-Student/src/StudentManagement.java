@@ -3,9 +3,9 @@ import java.util.List;
 
 public class StudentManagement implements Const {
     private static final List<Student> studentList = new LinkedList<>();
-    private static final MarkComparator markComparator = new MarkComparator();
-    private static final IdComparator idComparator = new IdComparator();
-    private static final NameComparator nameComparator = new NameComparator();
+    private static final StudentMarkComparator markComparator = new StudentMarkComparator();
+    private static final StudentIdComparator idComparator = new StudentIdComparator();
+    private static final StudentNameComparator nameComparator = new StudentNameComparator();
 
     public void add() {
         Student student = initStudent();
