@@ -1,95 +1,75 @@
 package view;
 
 import controller.Const;
-import controller.OurClassManagement;
-import controller.StudentManagement;
-import model.OurClass;
 import model.Student;
 
 import java.io.*;
-import java.util.LinkedList;
 
 public class Main implements Const {
 
-    private static final ClassMenu classMenu = new ClassMenu();
-    private static final StudentMenu studentMenu = new StudentMenu();
+    public static StudentMenu studentMenu = new StudentMenu();
+    public static OurClassMenu ourClassMenu = new OurClassMenu();
 
     public static void main(String[] args) {
         int choice;
         do {
             drawMainMenu();
+            System.out.print(MAKE_CHOICE);
             choice = scanner.nextInt();
+            scanner.nextLine();
             switch (choice) {
                 case 1: {
-                    classMenu.runClassMenu();
+                    ourClassMenu.run();
                     break;
                 }
                 case 2: {
-                    studentMenu.runStudentMenu();
+                    studentMenu.run();
+                    break;
+                }
+                case 3: {
+                    exportData(DATA_FILE_PATH);
+                    break;
+                }
+                case 4: {
+                    importData(DATA_FILE_PATH);
                     break;
                 }
                 case 0: {
-                    exportData();
-                    System.exit(0);
+                    return;
                 }
                 default: {
                     break;
                 }
             }
-        } while (choice  != 0);
+        } while (choice != 0);
     }
 
-    private static void drawMainMenu() {
+    private static void exportData(String path) {
+        File data = new File(path);
+        try {
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(data));
+            StringBuilder dataString = new StringBuilder();
+            for (Student student : StudentMenu.studentManagement.getStudentList()) {
+                dataString.append(student).append("\n");
+            }
+            bufferedWriter.write(dataString.toString());
+            bufferedWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void importData(String path) {
+    }
+
+    public static void drawMainMenu() {
         System.out.println("\n=============================================================================");
         System.out.println("MAIN MENU!");
         System.out.println("\t 1. Class management!");
         System.out.println("\t 2. Student management!");
+        System.out.println("\t 3. Export data!");
+        System.out.println("\t 4. Import data!");
         System.out.println("\t 0. Exit!");
         System.out.println("=============================================================================");
-        System.out.print(MAKE_CHOICE);
-    }
-
-    public static void exportData() {
-        try {
-            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(dataFile));
-            for (int i = 0; i < StudentManagement.studentList.size(); i++) {
-                bufferedWriter.write(StudentManagement.studentList.get(i).toString());
-                if (i != StudentManagement.studentList.size() - 1) {
-                    bufferedWriter.write("\n");
-                }
-            }
-            bufferedWriter.close();
-        } catch (IOException exception) {
-            System.err.println("IO exception while exporting data!");
-        }
-    }
-
-    public static LinkedList<Student> importData() {
-        LinkedList<Student> studentList = new LinkedList<>();
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(dataFile));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                System.out.println(line);
-                String[] studentLine = line.split(",");
-
-                OurClass ourClass = new OurClass();
-                ourClass.setClassId(studentLine[3]);
-                ourClass.setClassName(studentLine[4]);
-                OurClassManagement.ourClassList.add(ourClass);
-
-                Student student = new Student();
-                student.setId(studentLine[0]);
-                student.setName(studentLine[1]);
-                student.setDateOfBirth(studentLine[2]);
-                student.setMark(Double.parseDouble(studentLine[3]));
-                student.setOurClass(ourClass);
-
-                studentList.add(student);
-            }
-        } catch (IOException exception) {
-            System.err.println("IO exception while importing data!");
-        }
-        return studentList;
     }
 }

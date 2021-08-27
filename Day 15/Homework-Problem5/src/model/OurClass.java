@@ -1,8 +1,10 @@
 package model;
 
+import java.util.LinkedList;
+
 public class OurClass {
     private String classId;
-    private String className;
+    private LinkedList<Student> classStudentList;
 
     public String getClassId() {
         return classId;
@@ -12,16 +14,16 @@ public class OurClass {
         this.classId = classId;
     }
 
-    public String getClassName() {
-        return className;
+    public LinkedList<Student> getClassStudentList() {
+        return classStudentList;
     }
 
-    public void setClassName(String className) {
-        this.className = className;
+    public void setClassStudentList(LinkedList<Student> classStudentList) {
+        this.classStudentList = classStudentList;
     }
 
     @Override
     public String toString() {
-        return classId + "," + className;
+        return classId + ", " + classStudentList.size() + " student";
     }
 }

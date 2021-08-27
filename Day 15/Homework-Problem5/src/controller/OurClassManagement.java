@@ -4,21 +4,37 @@ import model.OurClass;
 import model.Student;
 
 import java.util.LinkedList;
-import java.util.List;
 
-public class OurClassManagement implements Const, IGeneralManagement {
+import static view.StudentMenu.studentManagement;
 
-    public static final List<OurClass> ourClassList = new LinkedList<>();
+public class OurClassManagement implements Const, GeneralManagement {
 
-    @Override
-    public void add() {
-        ourClassList.add(initClass());
+    private final LinkedList<OurClass> ourClassList = new LinkedList<>();
+
+    public LinkedList<OurClass> getOurClassList() {
+        return ourClassList;
     }
 
-    protected OurClass initClass() {
+    @Override
+    public boolean add() {
+        OurClass ourClass = initOurClass();
+        if (ourClass == null) {
+            System.out.println(CLASS_EXISTED);
+            return false;
+        }
+        ourClassList.add(ourClass);
+        return true;
+    }
+
+    private OurClass initOurClass() {
         OurClass ourClass = new OurClass();
-        ourClass.setClassId(initClassId());
-        ourClass.setClassName(initClassName());
+        String classId = initClassId();
+        boolean classIdExisted = searchClassById(classId) != -1;
+        if (classIdExisted) {
+            return null;
+        }
+        ourClass.setClassId(classId);
+        ourClass.setClassStudentList(new LinkedList<>());
         return ourClass;
     }
 
@@ -27,63 +43,71 @@ public class OurClassManagement implements Const, IGeneralManagement {
         return scanner.nextLine();
     }
 
-    private String initClassName() {
-        request(CLASS_NAME);
-        return scanner.nextLine();
-    }
-
     @Override
     public void display(String classId) {
-        int index = searchById(classId);
-        System.out.println(ourClassList.get(index));
-    }
-
-    @Override
-    public void displayAll() {  // number of students included!
-        for (OurClass ourClass : ourClassList) {
-            int count = 0;
-            for (Student student : StudentManagement.studentList) {
-                if (student.getOurClass().equals(ourClass)) {
-                    count++;
-                }
-            }
-            System.out.println(ourClass + "," + count);
-        }
-    }
-
-    public void showStudentList(String classId) {
-        for (Student student : StudentManagement.studentList) {
-            if (student.getOurClass().getClassId().equals(classId)) {
+        int index = searchClassById(classId);
+        OurClass ourClass = ourClassList.get(index);
+        System.out.println(ourClass);
+        boolean classStudentListIsEmpty = ourClass.getClassStudentList().size() == 0;
+        if (classStudentListIsEmpty) {
+            System.out.println(STUDENT_LIST_OF_THIS_CLASS_EMPTY);
+        } else {
+            System.out.println(STUDENT_LIST_OF_THIS_CLASS);
+            for (Student student : ourClass.getClassStudentList()) {
                 System.out.println(student);
             }
         }
     }
 
     @Override
-    public void edit(String classId) {
-        int index = searchById(classId);
-        ourClassList.remove(index);
-        ourClassList.add(index, initClass());
+    public void displayAll() {
+        for (OurClass ourClass : ourClassList) {
+            System.out.println(ourClass);
+        }
+    }
+
+    @Override
+    public boolean edit(String classId) {
+        int index = searchClassById(classId);
+        System.out.println(GATHERING_NEW_INFORMATION);
+        OurClass ourClass = initOurClass();
+        if (ourClass == null) {
+            return false;
+        } else {
+            OurClass removedClass = ourClassList.remove(index);
+            ourClassList.add(index,ourClass);
+            // transfer the class student list from the removed to the new one
+            ourClass.setClassStudentList(removedClass.getClassStudentList());
+            //change the classId of all student into the new classId
+            for (Student student : ourClass.getClassStudentList()) {
+                student.setClassId(ourClass.getClassId());
+            }
+            return true;
+        }
     }
 
     @Override
     public void remove(String classId) {
-        int index = searchById(classId);
+        int index = searchClassById(classId);
         ourClassList.remove(index);
+        //remove all the student in the class
+        studentManagement.getStudentList().removeIf(student -> student.getClassId().equals(classId));
     }
 
-    @Override
-    public void request(String description) {
-        System.out.println("Enter " + description + ": ");
-    }
-
-    @Override
-    public int searchById(String classId) {
+    public int searchClassById(String classId) {
         for (int i = 0; i < ourClassList.size(); i++) {
             if (ourClassList.get(i).getClassId().equals(classId)) {
                 return i;
             }
         }
         return -1;
+    }
+
+    public boolean classIdExists(String classId) {
+        return searchClassById(classId) != -1;
+    }
+
+    private void request(String description) {
+        System.out.print("Enter " + description + ": ");
     }
 }

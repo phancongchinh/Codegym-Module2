@@ -5,7 +5,7 @@ public class Student {
     private String name;
     private String dateOfBirth;
     private double mark;
-    private OurClass ourClass;
+    private String classId;
 
     public String getId() {
         return id;
@@ -39,16 +39,16 @@ public class Student {
         this.mark = mark;
     }
 
-    public OurClass getOurClass() {
-        return ourClass;
+    public String getClassId() {
+        return classId;
     }
 
-    public void setOurClass(OurClass ourClass) {
-        this.ourClass = ourClass;
+    public void setClassId(String classId) {
+        this.classId = classId;
     }
 
     @Override
     public String toString() {
-        return id + "," + name + "," + dateOfBirth + "," + mark + "," + ourClass;
+        return id + "," + name + "," + dateOfBirth + "," + mark + "," + classId;
     }
 }
