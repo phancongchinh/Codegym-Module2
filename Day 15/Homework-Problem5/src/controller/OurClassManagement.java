@@ -7,7 +7,7 @@ import java.util.LinkedList;
 
 import static view.StudentMenu.studentManagement;
 
-public class OurClassManagement implements Const, GeneralManagement {
+public class OurClassManagement implements Const, GeneralManagement<OurClass> {
 
     private final LinkedList<OurClass> ourClassList = new LinkedList<>();
 
@@ -16,21 +16,17 @@ public class OurClassManagement implements Const, GeneralManagement {
     }
 
     @Override
-    public boolean add() {
-        OurClass ourClass = initOurClass();
-        if (ourClass == null) {
-            System.out.println(CLASS_EXISTED);
-            return false;
-        }
+    public boolean add(OurClass ourClass) {
         ourClassList.add(ourClass);
         return true;
     }
 
-    private OurClass initOurClass() {
+    public OurClass initOurClass() {
         OurClass ourClass = new OurClass();
         String classId = initClassId();
         boolean classIdExisted = searchClassById(classId) != -1;
         if (classIdExisted) {
+            System.out.println(CLASS_EXISTED);
             return null;
         }
         ourClass.setClassId(classId);

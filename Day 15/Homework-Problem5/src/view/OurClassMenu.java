@@ -2,6 +2,7 @@ package view;
 
 import controller.Const;
 import controller.OurClassManagement;
+import model.OurClass;
 
 public class OurClassMenu implements Const, Menu {
 
@@ -12,7 +13,7 @@ public class OurClassMenu implements Const, Menu {
         System.out.println("\n-----------------------------------------------------------------------------");
         System.out.println("CLASS MANAGEMENT MENU!");
         System.out.println("\t 1. Display list of all classes!");
-        System.out.println("\t 2. Searching information of a class!");
+        System.out.println("\t 2. Search for a class!");
         System.out.println("\t 3. Add a new class!");
         System.out.println("\t 4. Edit a class!");
         System.out.println("\t 5. Delete a class!");
@@ -56,7 +57,9 @@ public class OurClassMenu implements Const, Menu {
                 }
                 case 3:{
                     System.out.println(ADDING_CLASS);
-                    if (ourClassManagement.add()) {
+                    OurClass ourClass = ourClassManagement.initOurClass();
+                    if (ourClass != null) {
+                        ourClassManagement.add(ourClass);
                         System.out.println(CLASS_ADDED);
                     } else {
                         System.out.println(CLASS_ADDED_UNSUCCESSFULLY);

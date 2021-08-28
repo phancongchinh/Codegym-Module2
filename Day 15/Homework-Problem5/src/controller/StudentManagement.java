@@ -8,21 +8,19 @@ import java.util.List;
 
 import static view.OurClassMenu.ourClassManagement;
 
-public class StudentManagement implements Const, GeneralManagement {
+public class StudentManagement implements Const, GeneralManagement<Student> {
 
     private final StudentNameComparator studentNameComparator = new StudentNameComparator();
     private final StudentMarkComparator studentMarkComparator = new StudentMarkComparator();
 
-    private List<Student> studentList = new LinkedList<>();
+    private final List<Student> studentList = new LinkedList<>();
 
     public List<Student> getStudentList() {
         return studentList;
     }
 
     @Override
-    public boolean add() {
-        Student student = initStudent();
-        if (student == null) return false;
+    public boolean add(Student student) {
         studentList.add(student);
         // add student to Class Student List
         int indexOfClass = ourClassManagement.searchClassById(student.getClassId());
@@ -31,7 +29,7 @@ public class StudentManagement implements Const, GeneralManagement {
         return true;
     }
 
-    private Student initStudent() {
+    public Student initStudent() {
         request(CLASS_ID);
         String classId = scanner.nextLine();
         //check classId exists or not

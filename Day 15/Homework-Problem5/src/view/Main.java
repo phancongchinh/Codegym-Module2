@@ -1,9 +1,14 @@
 package view;
 
 import controller.Const;
+import model.OurClass;
 import model.Student;
 
 import java.io.*;
+import java.util.LinkedList;
+
+import static view.OurClassMenu.ourClassManagement;
+import static view.StudentMenu.studentManagement;
 
 public class Main implements Const {
 
@@ -45,14 +50,15 @@ public class Main implements Const {
     }
 
     private static void exportData(String path) {
-        File data = new File(path);
         try {
+            File data = new File(path);
             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(data));
-            StringBuilder dataString = new StringBuilder();
-            for (Student student : StudentMenu.studentManagement.getStudentList()) {
-                dataString.append(student).append("\n");
+            StringBuilder stringBuilder = new StringBuilder();
+            for (Student student : studentManagement.getStudentList()) {
+                stringBuilder.append(student).append("\n");
             }
-            bufferedWriter.write(dataString.toString());
+            stringBuilder.deleteCharAt(stringBuilder.length()-1);
+            bufferedWriter.write(String.valueOf(stringBuilder));
             bufferedWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -60,6 +66,39 @@ public class Main implements Const {
     }
 
     private static void importData(String path) {
+        try {
+            //clear current data
+            ourClassManagement.getOurClassList().clear();
+            studentManagement.getStudentList().clear();
+
+            //reading data
+            File data = new File(path);
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(data));
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                System.out.println(line);
+                String[] studentLine = line.split(",");
+
+                // init class if class ID does not exist
+                if (ourClassManagement.searchClassById(studentLine[4]) == -1) {
+                    ourClassManagement.getOurClassList().add(new OurClass(studentLine[4],new LinkedList<Student>()));
+                }
+
+                // init student from read data
+                Student student = new Student();
+                student.setId(studentLine[0]);
+                student.setName(studentLine[1]);
+                student.setDateOfBirth(studentLine[2]);
+                student.setMark(Double.parseDouble(studentLine[3]));
+                student.setClassId(studentLine[4]);
+
+                // add student to Student List and Class Student List
+                studentManagement.add(student);
+            }
+            bufferedReader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void drawMainMenu() {

@@ -6,6 +6,14 @@ public class OurClass {
     private String classId;
     private LinkedList<Student> classStudentList;
 
+    public OurClass() {
+    }
+
+    public OurClass(String classId, LinkedList<Student> classStudentList) {
+        this.classId = classId;
+        this.classStudentList = classStudentList;
+    }
+
     public String getClassId() {
         return classId;
     }

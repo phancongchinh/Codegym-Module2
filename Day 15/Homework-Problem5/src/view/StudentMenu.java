@@ -2,10 +2,15 @@ package view;
 
 import controller.Const;
 import controller.StudentManagement;
+import model.Student;
 
 public class StudentMenu implements Const, Menu {
 
     public static StudentManagement studentManagement = new StudentManagement();
+
+    public static StudentManagement getStudentManagement() {
+        return studentManagement;
+    }
 
     @Override
     public void draw() {
@@ -58,7 +63,9 @@ public class StudentMenu implements Const, Menu {
                 }
                 case 3: {
                     System.out.println(ADDING_STUDENT);
-                    if (studentManagement.add()) {
+                    Student student = studentManagement.initStudent();
+                    if (student != null) {
+                        studentManagement.add(student);
                         System.out.println(STUDENT_ADDED);
                     } else {
                         System.out.println(STUDENT_ADDED_UNSUCCESSFULLY);
