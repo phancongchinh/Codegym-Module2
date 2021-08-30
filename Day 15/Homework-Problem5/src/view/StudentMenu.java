@@ -133,6 +133,7 @@ public class StudentMenu implements Const, Menu {
                     break;
                 }
                 case 0: {
+                    System.out.println(TURN_BACK);
                     return;
                 }
                 default: {

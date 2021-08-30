@@ -81,7 +81,7 @@ public class Main implements Const {
 
                 // init class if class ID does not exist
                 if (ourClassManagement.searchClassById(studentLine[4]) == -1) {
-                    ourClassManagement.getOurClassList().add(new OurClass(studentLine[4],new LinkedList<Student>()));
+                    ourClassManagement.getOurClassList().add(new OurClass(studentLine[4],new LinkedList<>()));
                 }
 
                 // init student from read data
