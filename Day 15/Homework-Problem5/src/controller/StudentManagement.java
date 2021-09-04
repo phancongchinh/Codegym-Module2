@@ -22,6 +22,7 @@ public class StudentManagement implements Const, GeneralManagement<Student> {
     @Override
     public boolean add(Student student) {
         studentList.add(student);
+
         // add student to Class Student List
         int indexOfClass = ourClassManagement.searchClassById(student.getClassId());
         OurClass ourClass = ourClassManagement.getOurClassList().get(indexOfClass);
@@ -80,14 +81,18 @@ public class StudentManagement implements Const, GeneralManagement<Student> {
         } else {
             //remove then add new student to student list
             Student removedStudent = studentList.remove(index);
+
             studentList.add(index,student);
+
             // get index of the removed student in the class's student list
             int indexOfClass = ourClassManagement.searchClassById(removedStudent.getClassId());
             OurClass ourClass = ourClassManagement.getOurClassList().get(indexOfClass);
             int indexOfRemovedStudentInClass = ourClass.getClassStudentList().indexOf(removedStudent);
             // remove then add new student to class student list
+
             ourClass.getClassStudentList().remove(indexOfRemovedStudentInClass);
             ourClass.getClassStudentList().add(indexOfRemovedStudentInClass,student);
+
             return true;
         }
     }
@@ -97,6 +102,8 @@ public class StudentManagement implements Const, GeneralManagement<Student> {
         // remove the student from student list
         int index = searchStudentById(id);
         Student removedStudent = studentList.remove(index);
+
+
         // get the class
         int indexOfClass = ourClassManagement.searchClassById(removedStudent.getClassId());
         OurClass ourClass = ourClassManagement.getOurClassList().get(indexOfClass);

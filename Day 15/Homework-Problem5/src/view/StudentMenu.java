@@ -117,6 +117,7 @@ public class StudentMenu implements Const, Menu {
                     System.out.println(STUDENT_LIST_SORTED_BY_NAME_AZ);
                     studentManagement.sortByNameAZ();
                     studentManagement.displayAll();
+
                     System.out.println(STUDENT_LIST_SORTED_BY_NAME_ZA);
                     studentManagement.sortByNameZA();
                     studentManagement.displayAll();

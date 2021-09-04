@@ -30,6 +30,7 @@ public class OurClassManagement implements Const, GeneralManagement<OurClass> {
             return null;
         }
         ourClass.setClassId(classId);
+
         ourClass.setClassStudentList(new LinkedList<>());
         return ourClass;
     }
@@ -43,7 +44,9 @@ public class OurClassManagement implements Const, GeneralManagement<OurClass> {
     public void display(String classId) {
         int index = searchClassById(classId);
         OurClass ourClass = ourClassList.get(index);
-        System.out.println(ourClass);
+
+        System.out.println(ourClass);// mã lớp + số sinh viên :))
+
         boolean classStudentListIsEmpty = ourClass.getClassStudentList().size() == 0;
         if (classStudentListIsEmpty) {
             System.out.println(STUDENT_LIST_OF_THIS_CLASS_EMPTY);
@@ -67,11 +70,14 @@ public class OurClassManagement implements Const, GeneralManagement<OurClass> {
         int index = searchClassById(classId);
         System.out.println(GATHERING_NEW_INFORMATION);
         OurClass ourClass = initOurClass();
+
         if (ourClass == null) {
             return false;
         } else {
             OurClass removedClass = ourClassList.remove(index);
+
             ourClassList.add(index,ourClass);
+
             // transfer the class student list from the removed to the new one
             ourClass.setClassStudentList(removedClass.getClassStudentList());
             //change the classId of all student into the new classId

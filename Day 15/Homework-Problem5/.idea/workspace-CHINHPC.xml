@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="7272ba09-8584-4db0-9ae6-0745714360a6" name="Changes" comment="Homework - Student + Class management - Import &amp; Export added">
+      <change afterPath="$PROJECT_DIR$/../../Case/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Case/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Case/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Case/.idea/runConfigurations.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Case/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Case/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Case/Case.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Case/src/controller/IGeneralManagement.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Case/src/controller/apartment/ApartmentManagement.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Case/src/controller/apartment/IApartmentManagement.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Case/src/controller/invoice/IInvoiceManagement.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Case/src/controller/invoice/InvoiceManagement.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Case/src/controller/staff/IStaffManagement.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Case/src/controller/staff/StaffManagement.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Case/src/model/Const.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Case/src/model/account/AccountInformation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Case/src/model/account/AccountRole.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Case/src/model/apartment/Apartment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Case/src/model/apartment/ApartmentLevel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Case/src/model/apartment/ApartmentState.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Case/src/model/apartment/ApartmentType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Case/src/model/guest/Guest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Case/src/model/invoice/Invoice.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Case/src/model/personalInformation/PersonalInformation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Case/src/model/staff/Staff.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Case/src/view/ApartmentManagementMenu.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Case/src/view/IMenu.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Case/src/view/InvoiceMenu.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Case/src/view/LoginMenu.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Case/src/view/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Case/src/view/StaffManagementMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Homework-Problem5/controller/OurClassManagement.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Homework-Problem5/controller/OurClassManagement.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Homework-Problem5/controller/StudentManagement.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Homework-Problem5/controller/StudentManagement.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Homework-Problem5/view/OurClassMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Homework-Problem5/view/OurClassMenu.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Homework-Problem5/view/StudentMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Homework-Problem5/view/StudentMenu.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controller/OurClassManagement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/OurClassManagement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controller/StudentManagement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/StudentManagement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/view/StudentMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/StudentMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Day 8/Tennis/apj-tennis-game" beforeDir="false" afterPath="$PROJECT_DIR$/../../Day 8/Tennis/apj-tennis-game" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Day 9/Simple Calculator/apj-calculator" beforeDir="false" afterPath="$PROJECT_DIR$/../../Day 9/Simple Calculator/apj-calculator" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/data.txt" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="ProjectId" id="1xCSZSFNdjjNqdQxMqTfXowQnGG" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.appearance" />
+  </component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="view.Main" />
+      <module name="Homework-Problem5" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="view.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="7272ba09-8584-4db0-9ae6-0745714360a6" name="Changes" comment="" />
+      <created>1629857636198</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1629857636198</updated>
+      <workItem from="1629857638210" duration="37750000" />
+      <workItem from="1629943077198" duration="17541000" />
+      <workItem from="1629966086113" duration="15899000" />
+      <workItem from="1630028075304" duration="31079000" />
+      <workItem from="1630077708330" duration="2883000" />
+      <workItem from="1630131267336" duration="11448000" />
+      <workItem from="1630215151187" duration="1046000" />
+      <workItem from="1630222537268" duration="2903000" />
+      <workItem from="1630290289502" duration="1549000" />
+      <workItem from="1630332700064" duration="5485000" />
+      <workItem from="1630373006359" duration="1210000" />
+      <workItem from="1630406813118" duration="1191000" />
+      <workItem from="1630473061643" duration="19000" />
+      <workItem from="1630551746863" duration="4339000" />
+      <workItem from="1630572550062" duration="2643000" />
+      <workItem from="1630642302425" duration="11000" />
+      <workItem from="1630644412945" duration="1625000" />
+      <workItem from="1630662562066" duration="1835000" />
+    </task>
+    <task id="LOCAL-00001" summary="Homework - Student + Class management">
+      <created>1630079748513</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1630079748513</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Homework - Student + Class management - Import &amp; Export added">
+      <created>1630158918956</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1630158918956</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="Homework - Student + Class management" />
+    <MESSAGE value="Homework - Student + Class management - Import &amp; Export added" />
+    <option name="LAST_COMMIT_MESSAGE" value="Homework - Student + Class management - Import &amp; Export added" />
+  </component>
+</project>
