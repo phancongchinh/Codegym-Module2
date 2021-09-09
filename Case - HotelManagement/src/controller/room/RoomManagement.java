@@ -5,25 +5,24 @@ import model.*;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 public class RoomManagement implements IRoomManagement {
 
     private static final List<Room> ROOM_LIST = new LinkedList<>();
 
     static {
-        ROOM_LIST.add(new Room("R0101",RoomState.EMPTY,RoomType.SINGLE,RoomLevel.STANDARD));
-        ROOM_LIST.add(new Room("R0102",RoomState.EMPTY,RoomType.SINGLE,RoomLevel.DELUXE));
-        ROOM_LIST.add(new Room("R0103",RoomState.EMPTY,RoomType.SINGLE,RoomLevel.LUXURY));
-        ROOM_LIST.add(new Room("R0104",RoomState.EMPTY,RoomType.DOUBLE,RoomLevel.STANDARD));
-        ROOM_LIST.add(new Room("R0105",RoomState.EMPTY,RoomType.DOUBLE,RoomLevel.DELUXE));
-        ROOM_LIST.add(new Room("R0106",RoomState.EMPTY,RoomType.DOUBLE,RoomLevel.LUXURY));
-        ROOM_LIST.add(new Room("R0201",RoomState.EMPTY,RoomType.SINGLE,RoomLevel.STANDARD));
-        ROOM_LIST.add(new Room("R0202",RoomState.EMPTY,RoomType.SINGLE,RoomLevel.DELUXE));
-        ROOM_LIST.add(new Room("R0203",RoomState.EMPTY,RoomType.SINGLE,RoomLevel.LUXURY));
-        ROOM_LIST.add(new Room("R0204",RoomState.EMPTY,RoomType.DOUBLE,RoomLevel.STANDARD));
-        ROOM_LIST.add(new Room("R0205",RoomState.EMPTY,RoomType.DOUBLE,RoomLevel.DELUXE));
-        ROOM_LIST.add(new Room("R0206",RoomState.EMPTY,RoomType.DOUBLE,RoomLevel.LUXURY));
+        ROOM_LIST.add(new Room("R0101", RoomState.EMPTY, RoomType.SINGLE, RoomLevel.STANDARD));
+        ROOM_LIST.add(new Room("R0102", RoomState.EMPTY, RoomType.SINGLE, RoomLevel.DELUXE));
+        ROOM_LIST.add(new Room("R0103", RoomState.EMPTY, RoomType.SINGLE, RoomLevel.LUXURY));
+        ROOM_LIST.add(new Room("R0104", RoomState.EMPTY, RoomType.DOUBLE, RoomLevel.STANDARD));
+        ROOM_LIST.add(new Room("R0105", RoomState.EMPTY, RoomType.DOUBLE, RoomLevel.DELUXE));
+        ROOM_LIST.add(new Room("R0106", RoomState.EMPTY, RoomType.DOUBLE, RoomLevel.LUXURY));
+        ROOM_LIST.add(new Room("R0201", RoomState.EMPTY, RoomType.SINGLE, RoomLevel.STANDARD));
+        ROOM_LIST.add(new Room("R0202", RoomState.EMPTY, RoomType.SINGLE, RoomLevel.DELUXE));
+        ROOM_LIST.add(new Room("R0203", RoomState.EMPTY, RoomType.SINGLE, RoomLevel.LUXURY));
+        ROOM_LIST.add(new Room("R0204", RoomState.EMPTY, RoomType.DOUBLE, RoomLevel.STANDARD));
+        ROOM_LIST.add(new Room("R0205", RoomState.EMPTY, RoomType.DOUBLE, RoomLevel.DELUXE));
+        ROOM_LIST.add(new Room("R0206", RoomState.EMPTY, RoomType.DOUBLE, RoomLevel.LUXURY));
     }
 
     public List<Room> getRoomList() {
@@ -42,8 +41,17 @@ public class RoomManagement implements IRoomManagement {
     }
 
     @Override
-    public void add(Room room) {
+    public boolean add(Room room) {
+        if (room == null) {
+            return false;
+        }
         ROOM_LIST.add(room);
+        return true;
+    }
+
+    @Override
+    public void add(int index, Room room) {
+        ROOM_LIST.add(index, room);
     }
 
     @Override
@@ -56,26 +64,24 @@ public class RoomManagement implements IRoomManagement {
         }
 
         // check input room type
-        Set<String> roomTypes = getRoomTypeEnums();
         System.out.print(ENTER_ROOM_TYPE);
-        String inputRoomType = scanner.nextLine().toUpperCase();
-        if (!roomTypes.contains(inputRoomType)) {
+        String inputRoomType = scanner.nextLine();
+        if (!isRoomTypeValid(inputRoomType)) {
             System.out.println(ROOM_TYPE_NOT_EXISTED);
             return null;
         }
 
         // check input room level
-        Set<String> roomLevels = getRoomLevelEnums();
         System.out.print(ENTER_ROOM_LEVEL);
-        String inputRoomLevel = scanner.nextLine().toUpperCase();
-        if (!roomLevels.contains(inputRoomLevel)) {
+        String inputRoomLevel = scanner.nextLine();
+        if (!isRoomLevelValid(inputRoomLevel)) {
             System.out.println(ROOM_LEVEL_NOT_EXISTED);
             return null;
         }
 
         RoomState roomState = RoomState.EMPTY;
-        RoomLevel roomLevel = RoomLevel.valueOf(inputRoomLevel);
-        RoomType roomType = RoomType.valueOf(inputRoomType);
+        RoomType roomType = RoomType.valueOf(inputRoomType.toUpperCase());
+        RoomLevel roomLevel = RoomLevel.valueOf(inputRoomLevel.toUpperCase());
         return new Room(roomId, roomState, roomType, roomLevel);
     }
 
@@ -95,20 +101,24 @@ public class RoomManagement implements IRoomManagement {
     @Override
     public boolean update(String roomId) {
         int index = indexOfRoom(roomId);
+        //remove first
+        Room removedRoom = remove(roomId);
+        // init a new one
         System.out.println(GATHERING_NEW_INFORMATION_FOR_UPDATING);
         Room newRoom = initFromKeyboard();
         if (newRoom == null) {
+            // add the removed room back to its position
+            add(index, removedRoom);
             return false;
-        } else {
-            ROOM_LIST.set(index,newRoom);
-            return true;
         }
+        add(index, newRoom);
+        return true;
     }
 
     @Override
-    public void remove(String roomId) {
+    public Room remove(String roomId) {
         int index = indexOfRoom(roomId);
-        ROOM_LIST.remove(index);
+        return ROOM_LIST.remove(index);
     }
 
     @Override
@@ -151,7 +161,7 @@ public class RoomManagement implements IRoomManagement {
                 rooms.add(room);
             }
         }
-        if (rooms.size() ==0) {
+        if (rooms.size() == 0) {
             System.out.println(NO_RESULT);
         } else {
             for (Room room : rooms) {
@@ -162,7 +172,7 @@ public class RoomManagement implements IRoomManagement {
 
     @Override
     public void listByType(RoomType roomType) {
-         List<Room> rooms = new LinkedList<>();
+        List<Room> rooms = new LinkedList<>();
         for (Room room : ROOM_LIST) {
             if (room.getRoomType().equals(roomType)) {
                 rooms.add(room);
@@ -194,30 +204,27 @@ public class RoomManagement implements IRoomManagement {
         }
     }
 
-    @Override
-    public HashSet<String> getRoomStateEnums() {
+    public boolean isRoomStateValid(String string) {
         HashSet<String> values = new HashSet<>();
         for (RoomState roomState : RoomState.values()) {
             values.add(roomState.name());
         }
-        return values;
+        return values.contains(string.toUpperCase());
     }
 
-    @Override
-    public HashSet<String> getRoomLevelEnums() {
+    public boolean isRoomLevelValid(String string) {
         HashSet<String> values = new HashSet<>();
         for (RoomLevel roomLevel : RoomLevel.values()) {
             values.add(roomLevel.name());
         }
-        return values;
+        return values.contains(string.toUpperCase());
     }
 
-    @Override
-    public HashSet<String> getRoomTypeEnums() {
+    public boolean isRoomTypeValid(String string) {
         HashSet<String> values = new HashSet<>();
         for (RoomType roomType : RoomType.values()) {
             values.add(roomType.name());
         }
-        return values;
+        return values.contains(string.toUpperCase());
     }
 }

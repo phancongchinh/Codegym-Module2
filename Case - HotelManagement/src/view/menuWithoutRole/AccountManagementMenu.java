@@ -4,13 +4,14 @@ import controller.account.AccountManagement;
 
 public class AccountManagementMenu implements IMenuWithoutRole {
 
-    private AccountManagementMenu(){}
+    private AccountManagementMenu() {
+    }
 
     public static AccountManagementMenu getInstance() {
         return AccountManagementMenuHelper.INSTANCE;
     }
 
-    private static class AccountManagementMenuHelper{
+    private static class AccountManagementMenuHelper {
         private static final AccountManagementMenu INSTANCE = new AccountManagementMenu();
     }
 
@@ -41,22 +42,16 @@ public class AccountManagementMenu implements IMenuWithoutRole {
 
     @Override
     public void handleChoice(String choice) {
-        boolean accountListIsEmpty = ACCOUNT_MANAGEMENT.getAccountList().size() == 0;
+        boolean empty = ACCOUNT_MANAGEMENT.getAccountList().size() == 0;
         switch (choice) {
             case "1": {
-                if (accountListIsEmpty) {
-                    System.out.println(ACCOUNT_LIST_EMPTY);
-                    break;
-                }
+                if (isAccountList(empty)) break;
                 System.out.println(ACCOUNT_LIST);
                 ACCOUNT_MANAGEMENT.displayAll();
                 break;
             }
             case "2": {
-                if (accountListIsEmpty) {
-                    System.out.println(ACCOUNT_LIST_EMPTY);
-                    break;
-                }
+                if (isAccountList(empty)) break;
                 System.out.println(SEARCH_ACCOUNT);
                 System.out.print(ENTER_ACCOUNT_ID);
                 String accountId = scanner.nextLine();
@@ -68,10 +63,7 @@ public class AccountManagementMenu implements IMenuWithoutRole {
                 break;
             }
             case "3": {
-                if (accountListIsEmpty) {
-                    System.out.println(ACCOUNT_LIST_EMPTY);
-                    break;
-                }
+                if (isAccountList(empty)) break;
                 System.out.println(ACTIVATING_AN_ACCOUNT);
                 System.out.print(ENTER_ACCOUNT_ID);
                 String accountId = scanner.nextLine();
@@ -83,10 +75,7 @@ public class AccountManagementMenu implements IMenuWithoutRole {
                 break;
             }
             case "4": {
-                if (accountListIsEmpty) {
-                    System.out.println(ACCOUNT_LIST_EMPTY);
-                    break;
-                }
+                if (isAccountList(empty)) break;
                 System.out.println(DEACTIVATING_AN_ACCOUNT);
                 System.out.print(ENTER_ACCOUNT_ID);
                 String accountId = scanner.nextLine();
@@ -106,5 +95,13 @@ public class AccountManagementMenu implements IMenuWithoutRole {
                 break;
             }
         }
+    }
+
+    private boolean isAccountList(boolean empty) {
+        if (empty) {
+            System.out.println(ACCOUNT_LIST_EMPTY);
+            return true;
+        }
+        return false;
     }
 }

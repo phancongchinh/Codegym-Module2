@@ -3,7 +3,6 @@ package model;
 public class Guest {
     private PersonalInformation personalInformation;
     private int expenditure;
-    private GuestLevel guestLevel;
 
     public Guest(){}
 
@@ -14,7 +13,6 @@ public class Guest {
     public Guest(PersonalInformation personalInformation, int expenditure, GuestLevel guestLevel) {
         this.personalInformation = personalInformation;
         this.expenditure = expenditure;
-        this.guestLevel = guestLevel;
     }
 
     public PersonalInformation getPersonalInformation() {
@@ -34,15 +32,22 @@ public class Guest {
     }
 
     public GuestLevel getGuestLevel() {
-        return guestLevel;
+        if (expenditure > 500000) {
+            return GuestLevel.DIAMOND;
+        } else if (expenditure > 300000) {
+            return GuestLevel.PLATINUM;
+        } else if (expenditure > 100000) {
+            return GuestLevel.GOLD;
+        } else if (expenditure > 50000) {
+            return GuestLevel.SILVER;
+        } else {
+            return GuestLevel.STANDARD;
+        }
     }
 
-    public void setGuestLevel(GuestLevel guestLevel) {
-        this.guestLevel = guestLevel;
-    }
 
     @Override
     public String toString() {
-        return personalInformation + "," + expenditure + "," + guestLevel;
+        return personalInformation + "," + expenditure + "," + getGuestLevel();
     }
 }

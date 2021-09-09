@@ -22,10 +22,9 @@ public interface IRoomManagement extends IGeneralManagement<Room> {
 
     void listByPrice(Double min, Double max);
 
-    HashSet<String> getRoomStateEnums();
+    boolean isRoomStateValid(String string);
 
-    HashSet<String> getRoomLevelEnums();
+    boolean isRoomLevelValid(String string);
 
-    HashSet<String> getRoomTypeEnums();
-
+    boolean isRoomTypeValid(String string);
 }

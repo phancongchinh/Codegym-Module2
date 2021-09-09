@@ -22,11 +22,11 @@ public class StaffManagement implements IStaffManagement {
     }
 
     static {
-        STAFF_LIST.add(new Staff("ID0001","Name1", LocalDate.parse("2000-01-01"),"Staff0001", Role.MANAGER,0.0));
-        STAFF_LIST.add(new Staff("ID0002","Name2", LocalDate.parse("2000-01-02"),"Staff0002",Role.STAFF,0.0));
-        STAFF_LIST.add(new Staff("ID0003","Name3", LocalDate.parse("2000-01-03"),"Staff0003",Role.STAFF,0.0));
-        STAFF_LIST.add(new Staff("ID0004","Name4", LocalDate.parse("2000-01-04"),"Staff0004",Role.STAFF,0.0));
-        STAFF_LIST.add(new Staff("ID0005","Name5", LocalDate.parse("2000-01-05"),"Staff0005",Role.STAFF,0.0));
+        STAFF_LIST.add(new Staff("ID0001", "Name1", LocalDate.parse("2000-01-01"), "Staff0001", Role.MANAGER, 0.0));
+        STAFF_LIST.add(new Staff("ID0002", "Name2", LocalDate.parse("2000-01-02"), "Staff0002", Role.STAFF, 0.0));
+        STAFF_LIST.add(new Staff("ID0003", "Name3", LocalDate.parse("2000-01-03"), "Staff0003", Role.STAFF, 0.0));
+        STAFF_LIST.add(new Staff("ID0004", "Name4", LocalDate.parse("2000-01-04"), "Staff0004", Role.STAFF, 0.0));
+        STAFF_LIST.add(new Staff("ID0005", "Name5", LocalDate.parse("2000-01-05"), "Staff0005", Role.STAFF, 0.0));
     }
 
     private StaffManagement() {
@@ -41,29 +41,46 @@ public class StaffManagement implements IStaffManagement {
     }
 
     @Override
-    public void add(Staff staff) {
+    public boolean add(Staff staff) {
+        if (staff == null) {
+            return false;
+        }
         STAFF_LIST.add(staff);
-        ACCOUNT_MANAGEMENT.add(staff.getAccount()); // add the staff's account to account list
+        ACCOUNT_MANAGEMENT.add(staff.getAccount());
+        return true;
+    }
+
+    @Override
+    public void add(int index, Staff staff) {
+        STAFF_LIST.add(index, staff);
+        ACCOUNT_MANAGEMENT.add(index + 1, staff.getAccount());
     }
 
     @Override
     public Staff initFromKeyboard() {
-        PersonalInformation personalInformation = PERSONAL_INFORMATION_MANAGEMENT.initInformationForA(STAFF);
+        PersonalInformation personalInformation = PERSONAL_INFORMATION_MANAGEMENT.initFromKeyBoard();
         if (personalInformation == null) {
             return null;
         }
+        if (existsPersonalId(personalInformation.getId())) {
+            System.out.println(PERSONAL_ID_EXISTED);
+            return null;
+        }
+
         System.out.print(ENTER_STAFF_ID);
         String staffId = scanner.nextLine();
         if (existsStaffId(staffId)) {
             System.out.println(STAFF_ID_EXISTED);
             return null;
         }
+
         System.out.print(ENTER_STAFF_ROLE);
-        String inputRole = scanner.nextLine().toUpperCase();
-        if (!getRoleEnums().contains(inputRole)) {
+        String inputRole = scanner.nextLine();
+        if (!isRoleValid(inputRole)) {
+            System.out.println(INVALID_ROLE);
             return null;
         }
-        Role role = Role.valueOf(inputRole);
+        Role role = Role.valueOf(inputRole.toUpperCase());
 
         // Generate an account automatically for the new staff
         Account account = ACCOUNT_MANAGEMENT.generateAccountAutomatically(role, staffId, personalInformation.getDateOfBirth());
@@ -86,23 +103,28 @@ public class StaffManagement implements IStaffManagement {
     @Override
     public boolean update(String staffId) {
         int index = indexOfStaff(staffId);
+        //remove first
+        Staff removedStaff = remove(staffId);
+        //init a new staff
         System.out.println(GATHERING_NEW_INFORMATION_FOR_UPDATING);
-        Staff newStaff = initFromKeyboard(); // account is also initialized
+        Staff newStaff = initFromKeyboard();
         if (newStaff == null) {
+            // add the removed staff back to his position
+            add(index, removedStaff);
             return false;
         } else {
-            STAFF_LIST.set(index, newStaff);
-            ACCOUNT_MANAGEMENT.getAccountList().set(index, newStaff.getAccount());
+            add(index, newStaff);
         }
         return true;
     }
 
     @Override
-    public void remove(String staffId) {
+    public Staff remove(String staffId) {
         int index = indexOfStaff(staffId);
         Staff removedStaff = STAFF_LIST.remove(index);
         // Also remove account from account list
-        ACCOUNT_MANAGEMENT.getAccountList().remove(removedStaff.getAccount());
+        ACCOUNT_MANAGEMENT.getAccountList().remove(index + 1);
+        return removedStaff;
     }
 
     @Override
@@ -121,6 +143,16 @@ public class StaffManagement implements IStaffManagement {
     }
 
     @Override
+    public boolean existsPersonalId(String id) {
+        for (Staff staff : STAFF_LIST) {
+            if (staff.getPersonalInformation().getId().equals(id)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
     public void displayBySales(Double min, Double max) {
         int count = 0;
         for (Staff staff : STAFF_LIST) {
@@ -135,11 +167,11 @@ public class StaffManagement implements IStaffManagement {
     }
 
     @Override
-    public HashSet<String> getRoleEnums() {
+    public boolean isRoleValid(String string) {
         HashSet<String> values = new HashSet<>();
         for (Role role : Role.values()) {
             values.add(role.name());
         }
-        return values;
+        return values.contains(string.toUpperCase());
     }
 }

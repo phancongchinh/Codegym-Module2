@@ -33,13 +33,17 @@ public class GuestManagement implements IGuestManagement {
     @Override
     public Guest initFromKeyboard() {
         PersonalInformation personalInformation;
-        personalInformation = PERSONAL_INFORMATION_MANAGEMENT.initInformationForA(GUEST);
+        personalInformation = PERSONAL_INFORMATION_MANAGEMENT.initFromKeyBoard();
         return (personalInformation == null)? null : new Guest(personalInformation);
     }
 
     @Override
-    public void add(Guest guest) {
+    public boolean add(Guest guest) {
+        if (guest == null) {
+            return false;
+        }
         GUEST_LIST.add(guest);
+        return true;
     }
 
     @Override
@@ -66,9 +70,9 @@ public class GuestManagement implements IGuestManagement {
     }
 
     @Override
-    public void remove(String id) {
+    public Guest remove(String id) {
         int index = indexOfGuest(id);
-        GUEST_LIST.remove(index);
+        return GUEST_LIST.remove(index);
     }
 
     @Override
@@ -86,11 +90,12 @@ public class GuestManagement implements IGuestManagement {
         return indexOfGuest(id) != -1;
     }
 
-    public HashSet<String> getGuestLevelEnums() {
+    @Override
+    public boolean isGuestLevelValid(String string) {
         HashSet<String> values = new HashSet<>();
         for (GuestLevel guestLevel : GuestLevel.values()) {
             values.add(guestLevel.name());
         }
-        return values;
+        return values.contains(string.toUpperCase());
     }
 }

@@ -107,10 +107,10 @@ public class IODataManagement implements IIODataManagement {
     }
 
     public void importData() throws IOException {
-        importRoomData();
-        importInvoiceData();
-        importGuestData();
-        importStaffData();
+//        importRoomData();
+//        importInvoiceData();
+//        importGuestData();
+//        importStaffData();
     }
 
     private void importGuestData() {

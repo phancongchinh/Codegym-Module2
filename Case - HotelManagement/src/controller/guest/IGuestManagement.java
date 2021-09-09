@@ -13,5 +13,5 @@ public interface IGuestManagement extends IGeneralManagement<Guest> {
 
     boolean existsGuestId(String id);
 
-    public HashSet<String> getGuestLevelEnums();
+    boolean isGuestLevelValid(String string);
 }

@@ -51,22 +51,16 @@ public class RoomManagementMenu implements IMenuWithoutRole {
 
     @Override
     public void handleChoice(String choice) {
-        boolean roomListIsEmpty = ROOM_MANAGEMENT.getRoomList().size() == 0;
+        boolean empty = ROOM_MANAGEMENT.getRoomList().size() == 0;
         switch (choice) {
             case "1": {
-                if (roomListIsEmpty) {
-                    System.out.println(ROOM_LIST_EMPTY);
-                    break;
-                }
+                if (isRoomList(empty)) break;
                 System.out.println(ROOM_LIST);
                 ROOM_MANAGEMENT.displayAll();
                 break;
             }
             case "2": {
-                if (roomListIsEmpty) {
-                    System.out.println(ROOM_LIST_EMPTY);
-                    break;
-                }
+                if (isRoomList(empty)) break;
                 System.out.println(SEARCH_ROOM);
                 System.out.print(ENTER_ROOM_ID);
                 String roomId = scanner.nextLine();
@@ -80,8 +74,7 @@ public class RoomManagementMenu implements IMenuWithoutRole {
             case "3": {
                 System.out.println(ADDING_ROOM);
                 Room room = ROOM_MANAGEMENT.initFromKeyboard();
-                if (room != null) {
-                    ROOM_MANAGEMENT.add(room);
+                if (ROOM_MANAGEMENT.add(room)) {
                     System.out.println(ROOM_ADDED);
                 } else {
                     System.out.println(ROOM_ADDED_UNSUCCESSFULLY);
@@ -89,27 +82,19 @@ public class RoomManagementMenu implements IMenuWithoutRole {
                 break;
             }
             case "4": {
-                if (roomListIsEmpty) {
-                    System.out.println(ROOM_LIST_EMPTY);
-                    break;
-                }
+                if (isRoomList(empty)) break;
                 System.out.println(UPDATING_ROOM);
                 System.out.print(ENTER_ROOM_ID);
                 String roomId = scanner.nextLine();
-                if (ROOM_MANAGEMENT.existsRoomId(roomId)) {
-                    ROOM_MANAGEMENT.update(roomId);
+                if (ROOM_MANAGEMENT.update(roomId)) {
                     System.out.println(ROOM_UPDATED);
                 } else {
-                    System.out.println(ROOM_ID_NOT_EXISTED);
                     System.out.println(ROOM_UPDATED_UNSUCCESSFULLY);
                 }
                 break;
             }
             case "5": {
-                if (roomListIsEmpty) {
-                    System.out.println(ROOM_LIST_EMPTY);
-                    break;
-                }
+                if (isRoomList(empty)) break;
                 System.out.println(DELETING_ROOM);
                 System.out.print(ENTER_ROOM_ID);
                 String roomId = scanner.nextLine();
@@ -123,55 +108,43 @@ public class RoomManagementMenu implements IMenuWithoutRole {
                 break;
             }
             case "6": {
-                if (roomListIsEmpty) {
-                    System.out.println(ROOM_LIST_EMPTY);
-                    break;
-                }
+                if (isRoomList(empty)) break;
                 System.out.println(SEARCH_ROOM_BY_STATE);
                 System.out.print(ENTER_ROOM_STATE);
-                String inputRoomState = scanner.nextLine().toUpperCase();
-                if (ROOM_MANAGEMENT.getRoomStateEnums().contains(inputRoomState)) {
-                    ROOM_MANAGEMENT.listByState(RoomState.valueOf(inputRoomState));
+                String inputRoomState = scanner.nextLine();
+                if (ROOM_MANAGEMENT.isRoomStateValid(inputRoomState)) {
+                    ROOM_MANAGEMENT.listByState(RoomState.valueOf(inputRoomState.toUpperCase()));
                 } else {
                     System.out.println(ROOM_STATE_NOT_EXISTED);
                 }
                 break;
             }
             case "7": {
-                if (roomListIsEmpty) {
-                    System.out.println(ROOM_LIST_EMPTY);
-                    break;
-                }
+                if (isRoomList(empty)) break;
                 System.out.println(SEARCH_ROOM_BY_LEVEL);
                 System.out.print(ENTER_ROOM_LEVEL);
-                String inputRoomLevel = scanner.nextLine().toUpperCase();
-                if (ROOM_MANAGEMENT.getRoomLevelEnums().contains(inputRoomLevel)) {
-                    ROOM_MANAGEMENT.listByLevel(RoomLevel.valueOf(inputRoomLevel));
+                String inputRoomLevel = scanner.nextLine();
+                if (ROOM_MANAGEMENT.isRoomLevelValid(inputRoomLevel)) {
+                    ROOM_MANAGEMENT.listByLevel(RoomLevel.valueOf(inputRoomLevel.toUpperCase()));
                 } else {
                     System.out.println(ROOM_LEVEL_NOT_EXISTED);
                 }
                 break;
             }
             case "8": {
-                if (roomListIsEmpty) {
-                    System.out.println(ROOM_LIST_EMPTY);
-                    break;
-                }
+                if (isRoomList(empty)) break;
                 System.out.println(SEARCH_ROOM_BY_TYPE);
                 System.out.print(ENTER_ROOM_TYPE);
                 String inputRoomType = scanner.nextLine().toUpperCase();
-                if (ROOM_MANAGEMENT.getRoomTypeEnums().contains(inputRoomType)) {
-                    ROOM_MANAGEMENT.listByType(RoomType.valueOf(inputRoomType));
+                if (ROOM_MANAGEMENT.isRoomTypeValid(inputRoomType)) {
+                    ROOM_MANAGEMENT.listByType(RoomType.valueOf(inputRoomType.toUpperCase()));
                 } else {
                     System.out.println(ROOM_TYPE_NOT_EXISTED);
                 }
                 break;
             }
             case "9": {
-                if (roomListIsEmpty) {
-                    System.out.println(ROOM_LIST_EMPTY);
-                    break;
-                }
+                if (isRoomList(empty)) break;
                 System.out.println(SEARCH_ROOM_BY_PRICE);
 
                 System.out.print(ENTER_MINIMUM_PRICE);
@@ -202,5 +175,13 @@ public class RoomManagementMenu implements IMenuWithoutRole {
                 break;
             }
         }
+    }
+
+    private boolean isRoomList(boolean empty) {
+        if (empty) {
+            System.out.println(ROOM_LIST_EMPTY);
+            return true;
+        }
+        return false;
     }
 }

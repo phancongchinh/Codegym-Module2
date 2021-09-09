@@ -34,12 +34,21 @@ public class InvoiceManagement implements IInvoiceManagement {
     }
 
     @Override
-    public void add(Invoice invoice) {
+    public boolean add(Invoice invoice) {
+        if (invoice == null) {
+            return false;
+        }
         INVOICE_LIST.add(invoice);
-        GUEST_MANAGEMENT.add(invoice.getGuest()); // add the guest to the guest list
-
         int index = ROOM_MANAGEMENT.indexOfRoom(invoice.getRoom().getRoomId());
-        ROOM_MANAGEMENT.getRoomList().get(index).setRoomState(RoomState.OCCUPIED); // set the room state be OCCUPIED
+        ROOM_MANAGEMENT.getRoomList().get(index).setRoomState(RoomState.OCCUPIED);
+        return true;
+    }
+
+    @Override
+    public void add(int index, Invoice invoice) {
+        INVOICE_LIST.add(index, invoice);
+        int roomIndex = ROOM_MANAGEMENT.indexOfRoom(invoice.getRoom().getRoomId());
+        ROOM_MANAGEMENT.getRoomList().get(roomIndex).setRoomState(RoomState.OCCUPIED);
     }
 
     @Override
@@ -101,20 +110,34 @@ public class InvoiceManagement implements IInvoiceManagement {
             System.out.println(INVOICE_ID_NOT_EXISTED);
             return false;
         }
-        //update
+        //remove first
+        Invoice removedInvoice = remove(invoiceId);
+
+        // init a new one
         int index = indexOfInvoice(invoiceId);
         System.out.println(GATHERING_NEW_INFORMATION_FOR_UPDATING);
-        Invoice invoice = initFromKeyboard();
-        if (invoice == null) {
+        Invoice newInvoice = initFromKeyboard();
+        if (newInvoice == null) {
+            System.out.println(INVOICE_UPDATED_UNSUCCESSFULLY);
+            // add the removed staff back to its position
+            add(index, removedInvoice);
             return false;
         } else {
-            INVOICE_LIST.set(index,invoice);
+            add(index, newInvoice);
             return true;
         }
     }
 
     @Override
-    public void remove(String invoiceId) { // "Removing invoice" here means "Mark it as paid"!
+    public Invoice remove(String invoiceId) {
+        int index = indexOfInvoice(invoiceId);
+        Invoice removedInvoice = INVOICE_LIST.remove(index);
+        removedInvoice.getRoom().setRoomState(RoomState.EMPTY);
+        return removedInvoice;
+    }
+
+    @Override
+    public void payTheInvoice(String invoiceId) {
         int index = indexOfInvoice(invoiceId);
         Invoice invoice = INVOICE_LIST.get(index);
         invoice.setDueDate(LocalDate.now());
@@ -138,7 +161,7 @@ public class InvoiceManagement implements IInvoiceManagement {
                 totalSales += invoice.getTotalCharge();
             }
         }
-        if (invoices.size() ==0) {
+        if (invoices.size() == 0) {
             System.out.println(THERE_IS_NO_INVOICE_PAID_IN_THAT_MONTH);
         } else {
             for (Invoice invoice : invoices) {

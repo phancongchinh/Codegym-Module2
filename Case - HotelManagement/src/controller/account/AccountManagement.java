@@ -18,11 +18,11 @@ public class AccountManagement implements IAccountManagement {
 
     static {
         ACCOUNT_LIST.add(new Account(Role.ADMINISTRATOR, "Account0000", "admin", "admin", true));
-        ACCOUNT_LIST.add(new Account(Role.MANAGER, "Account0001", "Staff0001", "20000101", true));
-        ACCOUNT_LIST.add(new Account(Role.STAFF, "Account0002", "Staff0002", "20000102", true));
-        ACCOUNT_LIST.add(new Account(Role.STAFF, "Account0003", "Staff0003", "20000103", true));
-        ACCOUNT_LIST.add(new Account(Role.STAFF, "Account0004", "Staff0004", "20000104", true));
-        ACCOUNT_LIST.add(new Account(Role.STAFF, "Account0005", "Staff0005", "20000105", true));
+        ACCOUNT_LIST.add(new Account(Role.MANAGER, "Staff0001", "Staff0001", "20000101", true));
+        ACCOUNT_LIST.add(new Account(Role.STAFF, "Staff0002", "Staff0002", "20000102", true));
+        ACCOUNT_LIST.add(new Account(Role.STAFF, "Staff0003", "Staff0003", "20000103", true));
+        ACCOUNT_LIST.add(new Account(Role.STAFF, "Staff0004", "Staff0004", "20000104", true));
+        ACCOUNT_LIST.add(new Account(Role.STAFF, "Staff0005", "Staff0005", "20000105", true));
     }
 
     private AccountManagement() {
@@ -37,8 +37,17 @@ public class AccountManagement implements IAccountManagement {
     }
 
     @Override
-    public void add(Account account) {
+    public boolean add(Account account) {
+        if (account == null) {
+            return false;
+        }
         ACCOUNT_LIST.add(account);
+        return true;
+    }
+
+    @Override
+    public void add(int index, Account account) {
+        ACCOUNT_LIST.add(index, account);
     }
 
     @Override
@@ -85,9 +94,9 @@ public class AccountManagement implements IAccountManagement {
     }
 
     @Override
-    public void remove(String accountId) {
+    public Account remove(String accountId) {
         int index = indexOfAccount(accountId);
-        ACCOUNT_LIST.remove(index);
+        return ACCOUNT_LIST.remove(index);
     }
 
     @Override

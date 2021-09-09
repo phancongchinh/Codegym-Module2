@@ -6,7 +6,9 @@ public interface IGeneralManagement<T> extends Const {
 
     T initFromKeyboard() throws IllegalArgumentException;
 
-    void add(T t);
+    boolean add(T t);
+
+    void add(int index, T t);
 
     void display(String id);
 
@@ -14,5 +16,5 @@ public interface IGeneralManagement<T> extends Const {
 
     boolean update(String id);
 
-    void remove(String id);
+    T remove(String id);
 }

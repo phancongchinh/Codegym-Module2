@@ -5,7 +5,6 @@ import model.Invoice;
 import model.Month;
 
 import java.util.HashSet;
-import java.util.LinkedList;
 
 public interface IInvoiceManagement extends IGeneralManagement<Invoice> {
 
@@ -14,6 +13,8 @@ public interface IInvoiceManagement extends IGeneralManagement<Invoice> {
     boolean existsInvoiceId(String invoiceId);
 
     void calculateSalesByMonth(Month month);
+
+    void payTheInvoice(String invoiceId);
 
     HashSet<String> getMonthEnums();
 }

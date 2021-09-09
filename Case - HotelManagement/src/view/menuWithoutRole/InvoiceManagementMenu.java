@@ -27,7 +27,8 @@ public class InvoiceManagementMenu implements IMenuWithoutRole {
         System.out.println("\t 2. Searching information of an invoice!");
         System.out.println("\t 3. Add a new invoice!");
         System.out.println("\t 4. Edit information of an invoice!");
-        System.out.println("\t 5. Pay for an invoice!");
+        System.out.println("\t 5. Pay an invoice!");
+//        System.out.println("\t 6. Delete information of an invoice!");
         System.out.println("\t 6. Sales by month!");
         System.out.println("\t 0. Back!");
         System.out.println("-----------------------------------------------------------------------------");
@@ -46,22 +47,16 @@ public class InvoiceManagementMenu implements IMenuWithoutRole {
 
     @Override
     public void handleChoice(String choice) {
-        boolean invoiceListIsEmpty = INVOICE_MANAGEMENT.getInvoiceList().size() == 0;
+        boolean empty = INVOICE_MANAGEMENT.getInvoiceList().size() == 0;
         switch (choice) {
             case "1": {
-                if (invoiceListIsEmpty) {
-                    System.out.println(INVOICE_LIST_EMPTY);
-                    break;
-                }
+                if (isInvoiceList(empty)) break;
                 System.out.println(INVOICE_LIST);
                 INVOICE_MANAGEMENT.displayAll();
                 break;
             }
             case "2": {
-                if (invoiceListIsEmpty) {
-                    System.out.println(INVOICE_LIST_EMPTY);
-                    break;
-                }
+                if (isInvoiceList(empty)) break;
                 System.out.println(SEARCH_INVOICE);
                 System.out.print(ENTER_INVOICE_ID);
                 String invoiceId = scanner.nextLine();
@@ -84,16 +79,16 @@ public class InvoiceManagementMenu implements IMenuWithoutRole {
                 break;
             }
             case "4": {
-                if (invoiceListIsEmpty) {
-                    System.out.println(INVOICE_LIST_EMPTY);
-                    break;
-                }
+                if (isInvoiceList(empty)) break;
                 System.out.println(UPDATING_INVOICE);
                 System.out.print(ENTER_INVOICE_ID);
                 String invoiceId = scanner.nextLine();
                 if (INVOICE_MANAGEMENT.existsInvoiceId(invoiceId)) {
-                    INVOICE_MANAGEMENT.update(invoiceId);
-                    System.out.println(INVOICE_UPDATED);
+                    if (INVOICE_MANAGEMENT.update(invoiceId)) {
+                        System.out.println(INVOICE_UPDATED);
+                    } else {
+                        System.out.println(INVOICE_UPDATED_UNSUCCESSFULLY);
+                    }
                 } else {
                     System.out.println(INVOICE_ID_NOT_EXISTED);
                     System.out.println(INVOICE_UPDATED_UNSUCCESSFULLY);
@@ -101,15 +96,12 @@ public class InvoiceManagementMenu implements IMenuWithoutRole {
                 break;
             }
             case "5": {
-                if (invoiceListIsEmpty) {
-                    System.out.println(INVOICE_LIST_EMPTY);
-                    break;
-                }
-                System.out.println(PAYING_FOR_AN_INVOICE);
+                if (isInvoiceList(empty)) break;
+                System.out.println(PAYING_AN_INVOICE);
                 System.out.print(ENTER_INVOICE_ID);
                 String roomId = scanner.nextLine();
                 if (INVOICE_MANAGEMENT.existsInvoiceId(roomId)) {
-                    INVOICE_MANAGEMENT.remove(roomId);
+                    INVOICE_MANAGEMENT.payTheInvoice(roomId);
                     System.out.println(INVOICE_PAID);
                 } else {
                     System.out.println(INVOICE_ID_NOT_EXISTED);
@@ -117,11 +109,22 @@ public class InvoiceManagementMenu implements IMenuWithoutRole {
                 }
                 break;
             }
+//            case "6": {
+//                if (isInvoiceList(empty)) break;
+//                System.out.println(DELETING_INVOICE);
+//                System.out.print(ENTER_INVOICE_ID);
+//                String invoiceId = scanner.nextLine();
+//                if (INVOICE_MANAGEMENT.existsInvoiceId(invoiceId)) {
+//                    INVOICE_MANAGEMENT.remove(invoiceId);
+//                    System.out.println(INVOICE_DELETED);
+//                } else {
+//                    System.out.println(INVOICE_ID_NOT_EXISTED);
+//                    System.out.println(INVOICE_DELETED_UNSUCCESSFULLY);
+//                }
+//                break;
+//            }
             case "6": {
-                if (invoiceListIsEmpty) {
-                    System.out.println(INVOICE_LIST_EMPTY);
-                    break;
-                }
+                if (isInvoiceList(empty)) break;
                 System.out.println(LIST_INVOICES_BY_MONTH);
                 System.out.print(ENTER_MONTH);
                 String inputMonth = scanner.nextLine().toUpperCase();
@@ -141,5 +144,14 @@ public class InvoiceManagementMenu implements IMenuWithoutRole {
                 break;
             }
         }
+    }
+
+
+    private boolean isInvoiceList(boolean empty) {
+        if (empty) {
+            System.out.println(INVOICE_LIST_EMPTY);
+            return true;
+        }
+        return false;
     }
 }
