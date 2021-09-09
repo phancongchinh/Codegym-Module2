@@ -2,10 +2,11 @@ package controller.invoice;
 
 import controller.room.RoomManagement;
 import controller.guest.GuestManagement;
+import controller.staff.StaffManagement;
 import model.*;
 
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -13,6 +14,7 @@ public class InvoiceManagement implements IInvoiceManagement {
 
     private static final RoomManagement ROOM_MANAGEMENT = RoomManagement.getInstance();
     private static final GuestManagement GUEST_MANAGEMENT = GuestManagement.getInstance();
+    private static final StaffManagement STAFF_MANAGEMENT = StaffManagement.getInstance();
 
     private static final List<Invoice> INVOICE_LIST = new LinkedList<>();
 
@@ -36,33 +38,47 @@ public class InvoiceManagement implements IInvoiceManagement {
         INVOICE_LIST.add(invoice);
         GUEST_MANAGEMENT.add(invoice.getGuest()); // add the guest to the guest list
 
-        int index = ROOM_MANAGEMENT.indexOfRoom(invoice.getRoomId());
-        ROOM_MANAGEMENT.getRoomList().get(index).setRoomState(RoomState.OCCUPIED); ;// set the room state be OCCUPIED
+        int index = ROOM_MANAGEMENT.indexOfRoom(invoice.getRoom().getRoomId());
+        ROOM_MANAGEMENT.getRoomList().get(index).setRoomState(RoomState.OCCUPIED); // set the room state be OCCUPIED
     }
 
     @Override
     public Invoice initFromKeyboard() {
-        System.out.println(ENTER_INVOICE_ID);
+        System.out.print(ENTER_INVOICE_ID);
         String invoiceId = scanner.nextLine();
         if (existsInvoiceId(invoiceId)) {
             System.out.println(INVOICE_ID_EXISTED);
             return null;
         }
-        // Init Guest
-        PersonalInformation personalInformation = GUEST_MANAGEMENT.initFromKeyBoard();
-
-        // select room and staff
-        System.out.println(ENTER_ROOM_ID);
+        // init guest, exception already handled
+        System.out.println(GATHERING_GUEST_INFORMATION);
+        Guest guest = GUEST_MANAGEMENT.initFromKeyboard();
+        if (guest == null) {
+            return null;
+        }
+        // select room
+        System.out.print(ENTER_ROOM_ID);
         String roomId = scanner.nextLine();
-
-        System.out.println(ENTER_STAFF_ID);
+        if (!ROOM_MANAGEMENT.existsRoomId(roomId)) {
+            System.out.println(ROOM_ID_NOT_EXISTED);
+            return null;
+        }
+        int roomIndex = ROOM_MANAGEMENT.indexOfRoom(roomId);
+        Room room = ROOM_MANAGEMENT.getRoomList().get(roomIndex);
+        if (room.getRoomState().equals(RoomState.OCCUPIED)) {
+            System.out.println(THE_ROOM_HAS_BEEN_OCCUPIED);
+            return null;
+        }
+        // select staff
+        System.out.print(ENTER_STAFF_ID);
         String staffId = scanner.nextLine();
-
-        System.out.println(ENTER_DATE_OF_CHECKING_OUT);
-        LocalDate dueDate = LocalDate.parse(scanner.nextLine());
-        Guest guest = new Guest(personalInformation);
-
-        return new Invoice(invoiceId, guest, roomId, staffId, LocalDate.now(), dueDate);
+        if (!STAFF_MANAGEMENT.existsStaffId(staffId)) {
+            System.out.println(STAFF_ID_NOT_EXISTED);
+            return null;
+        }
+        int staffIndex = STAFF_MANAGEMENT.indexOfStaff(staffId);
+        Staff staff = STAFF_MANAGEMENT.getStaffList().get(staffIndex);
+        return new Invoice(invoiceId, guest, room, staff);
     }
 
     @Override
@@ -80,36 +96,58 @@ public class InvoiceManagement implements IInvoiceManagement {
 
     @Override
     public boolean update(String invoiceId) {
+        // check existence
+        if (!existsInvoiceId(invoiceId)) {
+            System.out.println(INVOICE_ID_NOT_EXISTED);
+            return false;
+        }
+        //update
         int index = indexOfInvoice(invoiceId);
-        System.out.println(GATHERING_NEW_INFORMATION);
+        System.out.println(GATHERING_NEW_INFORMATION_FOR_UPDATING);
         Invoice invoice = initFromKeyboard();
         if (invoice == null) {
             return false;
         } else {
-            INVOICE_LIST.remove(index);
-            INVOICE_LIST.add(index, invoice);
+            INVOICE_LIST.set(index,invoice);
             return true;
         }
     }
 
     @Override
-    public void remove(String invoiceId) {
+    public void remove(String invoiceId) { // "Removing invoice" here means "Mark it as paid"!
         int index = indexOfInvoice(invoiceId);
-        Invoice invoice = INVOICE_LIST.remove(index);
+        Invoice invoice = INVOICE_LIST.get(index);
+        invoice.setDueDate(LocalDate.now());
+        invoice.setPaid(true);
 
-        int roomIndex = ROOM_MANAGEMENT.indexOfRoom(invoice.getRoomId());
-        ROOM_MANAGEMENT.getRoomList().get(roomIndex).setRoomState(RoomState.EMPTY); ;// set the room state be OCCUPIED
+        // set the room state be EMPTY
+        invoice.getRoom().setRoomState(RoomState.EMPTY);
+
+        // add totalCharge to staff's sales
+        Staff staff = invoice.getStaff();
+        staff.setSales(staff.getSales() + invoice.getTotalCharge());
     }
 
     @Override
-    public LinkedList<Invoice> listByMonth(Month month) {
-        LinkedList<Invoice> invoiceListByMonth = new LinkedList<>();
+    public void calculateSalesByMonth(Month month) {
+        LinkedList<Invoice> invoices = new LinkedList<>();
+        double totalSales = 0;
         for (Invoice invoice : INVOICE_LIST) {
             if (invoice.getDueDate().getMonth().toString().equals(month.toString())) {
-                invoiceListByMonth.add(invoice);
+                invoices.add(invoice);
+                totalSales += invoice.getTotalCharge();
             }
         }
-        return invoiceListByMonth;
+        if (invoices.size() ==0) {
+            System.out.println(THERE_IS_NO_INVOICE_PAID_IN_THAT_MONTH);
+        } else {
+            for (Invoice invoice : invoices) {
+                System.out.println(invoice);
+            }
+            System.out.println("-----------------------------------------------------------------------------");
+            System.out.print(TOTAL_SALES + totalSales);
+        }
+
     }
 
     @Override
@@ -127,20 +165,12 @@ public class InvoiceManagement implements IInvoiceManagement {
         return indexOfInvoice(invoiceId) != -1;
     }
 
-    public long totalDays(String invoiceId) {
-        int index = indexOfInvoice(invoiceId);
-        Invoice invoice = INVOICE_LIST.get(index);
-        return ChronoUnit.DAYS.between(invoice.getInvoiceDate(),invoice.getDueDate());
-    }
-
     @Override
-    public Double totalCharge(String invoiceId) {
-        int index = indexOfInvoice(invoiceId);
-        Invoice invoice = INVOICE_LIST.get(index);
-        String guestId = invoice.getGuest().getPersonalInformation().getId();
-        long totalDays = totalDays(guestId);
-        String roomId = invoice.getRoomId();
-        Double roomPrice = ROOM_MANAGEMENT.priceOf(roomId);
-        return totalDays * roomPrice;
+    public HashSet<String> getMonthEnums() {
+        HashSet<String> values = new HashSet<>();
+        for (Month month : Month.values()) {
+            values.add(month.name());
+        }
+        return values;
     }
 }

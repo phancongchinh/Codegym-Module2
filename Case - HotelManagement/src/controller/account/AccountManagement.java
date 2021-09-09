@@ -12,12 +12,17 @@ public class AccountManagement implements IAccountManagement {
 
     private static final List<Account> ACCOUNT_LIST = new LinkedList<>();
 
-    static {
-        ACCOUNT_LIST.add(new Account(Role.ADMINISTRATOR,"0001","admin", "admin", true));
-    }
-
     public List<Account> getAccountList() {
         return ACCOUNT_LIST;
+    }
+
+    static {
+        ACCOUNT_LIST.add(new Account(Role.ADMINISTRATOR, "Account0000", "admin", "admin", true));
+        ACCOUNT_LIST.add(new Account(Role.MANAGER, "Account0001", "Staff0001", "20000101", true));
+        ACCOUNT_LIST.add(new Account(Role.STAFF, "Account0002", "Staff0002", "20000102", true));
+        ACCOUNT_LIST.add(new Account(Role.STAFF, "Account0003", "Staff0003", "20000103", true));
+        ACCOUNT_LIST.add(new Account(Role.STAFF, "Account0004", "Staff0004", "20000104", true));
+        ACCOUNT_LIST.add(new Account(Role.STAFF, "Account0005", "Staff0005", "20000105", true));
     }
 
     private AccountManagement() {
@@ -48,7 +53,9 @@ public class AccountManagement implements IAccountManagement {
         String username = scanner.nextLine();
         System.out.print(ENTER_ACCOUNT_PASSWORD);
         String password = scanner.nextLine();
-        return new Account(Role.STAFF,accountId,username,password,true);
+        System.out.println(ENTER_ACCOUNT_ROLE);
+        Role role = Role.valueOf(scanner.nextLine().toUpperCase());
+        return new Account(role, accountId, username, password, true);
     }
 
     @Override
@@ -67,13 +74,12 @@ public class AccountManagement implements IAccountManagement {
     @Override
     public boolean update(String accountId) {
         int index = indexOfAccount(accountId);
-        System.out.println(GATHERING_NEW_INFORMATION);
-        Account account = initFromKeyboard();
-        if (account == null) {
+        System.out.println(GATHERING_NEW_INFORMATION_FOR_UPDATING);
+        Account newAccount = initFromKeyboard();
+        if (newAccount == null) {
             return false;
         } else {
-            ACCOUNT_LIST.remove(index);
-            ACCOUNT_LIST.add(index,account);
+            ACCOUNT_LIST.set(index,newAccount);
             return true;
         }
     }
@@ -87,7 +93,22 @@ public class AccountManagement implements IAccountManagement {
     @Override
     public int indexOfAccount(String accountId) {
         for (Account account : ACCOUNT_LIST) {
-            if (account.getUsername().equals(accountId)) {
+            if (account.getAccountId().equals(accountId)) {
+                return ACCOUNT_LIST.indexOf(account);
+            }
+        }
+        return -1;
+    }
+
+    @Override
+    public boolean existAccountId(String accountId) {
+        return indexOfAccount(accountId) != -1;
+    }
+
+    @Override
+    public int indexOfAccount(String username, String password) {
+        for (Account account : ACCOUNT_LIST) {
+            if (account.getUsername().equals(username) && account.getPassword().equals(password)) {
                 return ACCOUNT_LIST.indexOf(account);
             }
         }
@@ -96,17 +117,7 @@ public class AccountManagement implements IAccountManagement {
 
     @Override
     public boolean existsAccount(String username, String password) {
-        for (Account account : ACCOUNT_LIST) {
-            if (account.getUsername().equals(username) && account.getPassword().equals(password)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public boolean existAccountId(String username) {
-        return indexOfAccount(username) != -1;
+        return indexOfAccount(username, password) != -1;
     }
 
     @Override
@@ -133,8 +144,8 @@ public class AccountManagement implements IAccountManagement {
         }
     }
 
-    public Account generateAccountAutomatically(String staffId, LocalDate dateOfBirth) {
+    public Account generateAccountAutomatically(Role accountRole, String staffId, LocalDate dateOfBirth) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-        return new Account(Role.STAFF, staffId, staffId, dateOfBirth.format(formatter), true);
+        return new Account(accountRole, staffId, staffId, dateOfBirth.format(formatter), true);
     }
 }

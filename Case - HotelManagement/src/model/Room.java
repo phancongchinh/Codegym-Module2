@@ -6,6 +6,9 @@ public class Room {
     private RoomType roomType;
     private RoomLevel roomLevel;
 
+    public Room(){
+    }
+
     public Room(String roomId, RoomState roomState, RoomType roomType, RoomLevel roomLevel) {
         this.roomId = roomId;
         this.roomState = roomState;
@@ -45,13 +48,50 @@ public class Room {
         this.roomLevel = roomLevel;
     }
 
+    public Double getPrice() {
+        RoomType roomType = this.getRoomType();
+        RoomLevel roomLevel = this.getRoomLevel();
+        switch (roomType) {
+            case SINGLE: {
+                switch (roomLevel) {
+                    case STANDARD: {
+                        return 1000.00;
+                    }
+                    case DELUXE: {
+                        return 1500.00;
+                    }
+                    case LUXURY: {
+                        return 2000.00;
+                    }
+                    default: {
+                        return null;
+                    }
+                }
+            }
+            case DOUBLE: {
+                switch (roomLevel) {
+                    case STANDARD: {
+                        return 2500.00;
+                    }
+                    case DELUXE: {
+                        return 3000.00;
+                    }
+                    case LUXURY: {
+                        return 3500.00;
+                    }
+                    default: {
+                        return null;
+                    }
+                }
+            }
+            default: {
+                return null;
+            }
+        }
+    }
+
     @Override
     public String toString() {
-        return "Room{" +
-                "roomId='" + roomId + '\'' +
-                ", roomState=" + roomState +
-                ", roomType=" + roomType +
-                ", roomLevel=" + roomLevel +
-                '}';
+        return roomId + "," + roomState + "," + roomType + "," + roomLevel + "," + this.getPrice();
     }
 }

@@ -1,12 +1,11 @@
 package controller.room;
 
-import model.Room;
-import model.RoomLevel;
-import model.RoomState;
-import model.RoomType;
+import model.*;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 public class RoomManagement implements IRoomManagement {
 
@@ -49,19 +48,34 @@ public class RoomManagement implements IRoomManagement {
 
     @Override
     public Room initFromKeyboard() {
-        System.out.println(ENTER_ROOM_ID);
+        System.out.print(ENTER_ROOM_ID);
         String roomId = scanner.nextLine();
         if (existsRoomId(roomId)) {
             System.out.println(ROOM_ID_EXISTED);
             return null;
         }
-        System.out.println(ENTER_ROOM_STATE);
-        RoomState roomState = RoomState.valueOf(scanner.nextLine().toUpperCase());
-        System.out.println(ENTER_ROOM_LEVEL);
-        RoomLevel roomLevel = RoomLevel.valueOf(scanner.nextLine().toUpperCase());
-        System.out.println(ENTER_ROOM_TYPE);
-        RoomType roomType = RoomType.valueOf(scanner.nextLine().toUpperCase());
 
+        // check input room type
+        Set<String> roomTypes = getRoomTypeEnums();
+        System.out.print(ENTER_ROOM_TYPE);
+        String inputRoomType = scanner.nextLine().toUpperCase();
+        if (!roomTypes.contains(inputRoomType)) {
+            System.out.println(ROOM_TYPE_NOT_EXISTED);
+            return null;
+        }
+
+        // check input room level
+        Set<String> roomLevels = getRoomLevelEnums();
+        System.out.print(ENTER_ROOM_LEVEL);
+        String inputRoomLevel = scanner.nextLine().toUpperCase();
+        if (!roomLevels.contains(inputRoomLevel)) {
+            System.out.println(ROOM_LEVEL_NOT_EXISTED);
+            return null;
+        }
+
+        RoomState roomState = RoomState.EMPTY;
+        RoomLevel roomLevel = RoomLevel.valueOf(inputRoomLevel);
+        RoomType roomType = RoomType.valueOf(inputRoomType);
         return new Room(roomId, roomState, roomType, roomLevel);
     }
 
@@ -81,13 +95,12 @@ public class RoomManagement implements IRoomManagement {
     @Override
     public boolean update(String roomId) {
         int index = indexOfRoom(roomId);
-        System.out.println(GATHERING_NEW_INFORMATION);
-        Room room = initFromKeyboard();
-        if (room == null) {
+        System.out.println(GATHERING_NEW_INFORMATION_FOR_UPDATING);
+        Room newRoom = initFromKeyboard();
+        if (newRoom == null) {
             return false;
         } else {
-            ROOM_LIST.remove(index);
-            ROOM_LIST.add(index, room);
+            ROOM_LIST.set(index,newRoom);
             return true;
         }
     }
@@ -114,91 +127,97 @@ public class RoomManagement implements IRoomManagement {
     }
 
     @Override
-    public LinkedList<Room> listByState(RoomState roomState) {
+    public void listByState(RoomState roomState) {
         LinkedList<Room> rooms = new LinkedList<>();
         for (Room room : ROOM_LIST) {
             if (room.getRoomState().equals(roomState)) {
                 rooms.add(room);
             }
         }
-        return rooms;
+        if (rooms.size() == 0) {
+            System.out.println(NO_RESULT);
+        } else {
+            for (Room room : rooms) {
+                System.out.println(room);
+            }
+        }
     }
 
     @Override
-    public LinkedList<Room> listByLevel(RoomLevel roomLevel) {
+    public void listByLevel(RoomLevel roomLevel) {
         LinkedList<Room> rooms = new LinkedList<>();
         for (Room room : ROOM_LIST) {
             if (room.getRoomLevel().equals(roomLevel)) {
                 rooms.add(room);
             }
         }
-        return rooms;
+        if (rooms.size() ==0) {
+            System.out.println(NO_RESULT);
+        } else {
+            for (Room room : rooms) {
+                System.out.println(room);
+            }
+        }
     }
 
     @Override
-    public LinkedList<Room> listByType(RoomType roomType) {
-        LinkedList<Room> rooms = new LinkedList<>();
+    public void listByType(RoomType roomType) {
+         List<Room> rooms = new LinkedList<>();
         for (Room room : ROOM_LIST) {
             if (room.getRoomType().equals(roomType)) {
                 rooms.add(room);
             }
         }
-        return rooms;
+        if (rooms.size() == 0) {
+            System.out.println(NO_RESULT);
+        } else {
+            for (Room room : rooms) {
+                System.out.println(room);
+            }
+        }
     }
 
     @Override
-    public LinkedList<Room> listByPrice(Double min, Double max) {
+    public void listByPrice(Double min, Double max) {
         LinkedList<Room> rooms = new LinkedList<>();
         for (Room room : ROOM_LIST) {
-            if (priceOf(room.getRoomId()) < max && priceOf(room.getRoomId()) > min) {
+            if (room.getPrice() <= max && room.getPrice() >= min) {
                 rooms.add(room);
             }
         }
-        return rooms;
+        if (rooms.size() == 0) {
+            System.out.println(NO_RESULT);
+        } else {
+            for (Room room : rooms) {
+                System.out.println(room);
+            }
+        }
     }
 
     @Override
-    public Double priceOf(String roomId) {
-        int index = indexOfRoom(roomId);
-        Room room = ROOM_LIST.get(index);
-        RoomType roomType = room.getRoomType();
-        RoomLevel roomLevel = room.getRoomLevel();
-        switch (roomType) {
-            case SINGLE: {
-                switch (roomLevel) {
-                    case STANDARD: {
-                        return 1000.00;
-                    }
-                    case DELUXE: {
-                        return 1500.00;
-                    }
-                    case LUXURY: {
-                        return 2000.00;
-                    }
-                    default: {
-                        return null;
-                    }
-                }
-            }
-            case DOUBLE: {
-                switch (roomLevel) {
-                    case STANDARD: {
-                        return 2500.00;
-                    }
-                    case DELUXE: {
-                        return 3000.00;
-                    }
-                    case LUXURY: {
-                        return 3500.00;
-                    }
-                    default: {
-                        return null;
-                    }
-                }
-            }
-            default: {
-                return null;
-            }
+    public HashSet<String> getRoomStateEnums() {
+        HashSet<String> values = new HashSet<>();
+        for (RoomState roomState : RoomState.values()) {
+            values.add(roomState.name());
         }
+        return values;
+    }
+
+    @Override
+    public HashSet<String> getRoomLevelEnums() {
+        HashSet<String> values = new HashSet<>();
+        for (RoomLevel roomLevel : RoomLevel.values()) {
+            values.add(roomLevel.name());
+        }
+        return values;
+    }
+
+    @Override
+    public HashSet<String> getRoomTypeEnums() {
+        HashSet<String> values = new HashSet<>();
+        for (RoomType roomType : RoomType.values()) {
+            values.add(roomType.name());
+        }
+        return values;
     }
 }

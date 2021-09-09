@@ -6,7 +6,7 @@ import model.RoomLevel;
 import model.RoomState;
 import model.RoomType;
 
-import java.util.LinkedList;
+import java.util.HashSet;
 
 public interface IRoomManagement extends IGeneralManagement<Room> {
 
@@ -14,14 +14,18 @@ public interface IRoomManagement extends IGeneralManagement<Room> {
 
     boolean existsRoomId(String roomId);
 
-    LinkedList<Room> listByState(RoomState roomState);
+    void listByState(RoomState roomState);
 
-    LinkedList<Room> listByLevel(RoomLevel roomLevel);
+    void listByLevel(RoomLevel roomLevel);
 
-    LinkedList<Room> listByType(RoomType roomType);
+    void listByType(RoomType roomType);
 
-    LinkedList<Room> listByPrice(Double min, Double max);
+    void listByPrice(Double min, Double max);
 
-    Double priceOf(String roomId);
+    HashSet<String> getRoomStateEnums();
+
+    HashSet<String> getRoomLevelEnums();
+
+    HashSet<String> getRoomTypeEnums();
 
 }

@@ -1,23 +1,29 @@
 package model;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 public class Invoice {
 
     private String invoiceId;
     private Guest guest;
-    private String roomId;
-    private String staffId;
+    private Room room;
+    private Staff staff;
     private LocalDate invoiceDate;
     private LocalDate dueDate;
+    private boolean isPaid;
 
-    public Invoice(String invoiceId, Guest guest, String roomId, String staffId, LocalDate invoiceDate, LocalDate dueDate) {
+    public Invoice() {
+    }
+
+    public Invoice(String invoiceId, Guest guest, Room room, Staff staff) {
         this.invoiceId = invoiceId;
         this.guest = guest;
-        this.roomId = roomId;
-        this.staffId = staffId;
-        this.invoiceDate = invoiceDate;
-        this.dueDate = dueDate;
+        this.room = room;
+        this.staff = staff;
+        this.invoiceDate = LocalDate.now();
+        this.dueDate = LocalDate.now();
+        this.isPaid = false;
     }
 
     public String getInvoiceId() {
@@ -36,20 +42,20 @@ public class Invoice {
         this.guest = guest;
     }
 
-    public String getRoomId() {
-        return roomId;
+    public Room getRoom() {
+        return room;
     }
 
-    public void setRoomId(String roomId) {
-        this.roomId = roomId;
+    public void setRoom(Room room) {
+        this.room = room;
     }
 
-    public String getStaffId() {
-        return staffId;
+    public Staff getStaff() {
+        return staff;
     }
 
-    public void setStaffId(String staffId) {
-        this.staffId = staffId;
+    public void setStaff(Staff staff) {
+        this.staff = staff;
     }
 
     public LocalDate getInvoiceDate() {
@@ -68,15 +74,31 @@ public class Invoice {
         this.dueDate = dueDate;
     }
 
+    public boolean isPaid() {
+        return isPaid;
+    }
+
+    public void setPaid(boolean paid) {
+        isPaid = paid;
+    }
+
+    private long totalDays() {
+        return ChronoUnit.DAYS.between(this.getInvoiceDate(), this.getDueDate());
+    }
+
+    public Double getTotalCharge() {
+        return totalDays() * this.getRoom().getPrice();
+    }
+
     @Override
     public String toString() {
-        return "Invoice{" +
-                "invoiceId='" + invoiceId + '\'' +
-                ", guest=" + guest +
-                ", roomId='" + roomId + '\'' +
-                ", staffId='" + staffId + '\'' +
-                ", invoiceDate=" + invoiceDate +
-                ", dueDate=" + dueDate +
-                '}';
+        return invoiceId + "," +
+                guest.getPersonalInformation().getId() + "," +
+                room.getRoomId() + "," +
+                staff.getStaffId() + "," +
+                invoiceDate + "," +
+                dueDate + "," +
+                getTotalCharge() + "," +
+                isPaid;
     }
 }

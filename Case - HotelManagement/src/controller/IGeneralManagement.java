@@ -4,7 +4,7 @@ import model.Const;
 
 public interface IGeneralManagement<T> extends Const {
 
-    T initFromKeyboard();
+    T initFromKeyboard() throws IllegalArgumentException;
 
     void add(T t);
 

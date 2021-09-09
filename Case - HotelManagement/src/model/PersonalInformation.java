@@ -7,8 +7,7 @@ public class PersonalInformation {
     private String name;
     private LocalDate dateOfBirth;
 
-    public PersonalInformation() {
-    }
+    public PersonalInformation(){}
 
     public PersonalInformation(String id, String name, LocalDate dateOfBirth) {
         this.id = id;

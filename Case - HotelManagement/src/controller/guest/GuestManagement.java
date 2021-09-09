@@ -1,13 +1,17 @@
 package controller.guest;
 
-import controller.person.PersonManagement;
+import controller.personalInformation.PersonalInformationManagement;
 import model.Guest;
+import model.GuestLevel;
 import model.PersonalInformation;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
-public class GuestManagement extends PersonManagement implements IGuestManagement {
+public class GuestManagement implements IGuestManagement {
+
+    private static final PersonalInformationManagement PERSONAL_INFORMATION_MANAGEMENT = PersonalInformationManagement.getInstance();
 
     private static final List<Guest> GUEST_LIST = new LinkedList<>();
 
@@ -26,14 +30,21 @@ public class GuestManagement extends PersonManagement implements IGuestManagemen
         private static final GuestManagement INSTANCE = new GuestManagement();
     }
 
-    @Override // do not need
+    @Override
     public Guest initFromKeyboard() {
-        return null;
+        PersonalInformation personalInformation;
+        personalInformation = PERSONAL_INFORMATION_MANAGEMENT.initInformationForA(GUEST);
+        return (personalInformation == null)? null : new Guest(personalInformation);
     }
 
     @Override
     public void add(Guest guest) {
-    GUEST_LIST.add(guest);
+        GUEST_LIST.add(guest);
+    }
+
+    @Override
+    public void add(int index, Guest guest) {
+        GUEST_LIST.add(index, guest);
     }
 
     @Override
@@ -73,5 +84,13 @@ public class GuestManagement extends PersonManagement implements IGuestManagemen
     @Override
     public boolean existsGuestId(String id) {
         return indexOfGuest(id) != -1;
+    }
+
+    public HashSet<String> getGuestLevelEnums() {
+        HashSet<String> values = new HashSet<>();
+        for (GuestLevel guestLevel : GuestLevel.values()) {
+            values.add(guestLevel.name());
+        }
+        return values;
     }
 }
