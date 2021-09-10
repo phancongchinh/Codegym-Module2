@@ -10,7 +10,7 @@ public class AdministratorMenu implements IMenuRanByRole {
     private static final AccountManagementMenu ACCOUNT_MANAGEMENT_MENU = AccountManagementMenu.getInstance();
     private static final StaffManagementMenu STAFF_MANAGEMENT_MENU = StaffManagementMenu.getInstance();
     private static final GuestManagementMenu GUEST_MANAGEMENT_MENU = GuestManagementMenu.getInstance();
-    private static final ExportImportMenu EXPORT_IMPORT_MENU = ExportImportMenu.getInstance();
+    private static final IODataManagementMenu EXPORT_IMPORT_MENU = IODataManagementMenu.getInstance();
 
     private AdministratorMenu(){}
 

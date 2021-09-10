@@ -2,6 +2,7 @@ package view.menuWithoutRole;
 
 import controller.account.AccountManagement;
 
+import controller.ioData.IODataManagement;
 import model.Account;
 import model.Role;
 
@@ -9,12 +10,15 @@ import view.menuByRole.AdministratorMenu;
 import view.menuByRole.ManagerMenu;
 import view.menuByRole.StaffMenu;
 
-public class LoginMenu implements IMenuWithoutRole {
+import java.io.IOException;
 
+public class LoginMenu implements IMenuWithoutRole {
+    private static final IODataManagement IO_DATA_MANAGEMENT = IODataManagement.getInstance();
     private static final AccountManagement ACCOUNT_MANAGEMENT = AccountManagement.getInstance();
     private static final AdministratorMenu ADMINISTRATOR_MENU = AdministratorMenu.getInstance();
     private static final ManagerMenu MANAGER_MENU = ManagerMenu.getInstance();
     private static final StaffMenu STAFF_MENU = StaffMenu.getInstance();
+    public static final String EXITING = "EXITING...!";
 
     private LoginMenu() {
     }
@@ -60,6 +64,14 @@ public class LoginMenu implements IMenuWithoutRole {
                 break;
             }
             case "0": {
+                try {
+                    IO_DATA_MANAGEMENT.exportData();
+                }
+                catch (IOException exception) {
+                    System.out.println(IO_EXCEPTION_DATA_EXPORTED_UNSUCCESSFULLY);
+                    break;
+                }
+                System.out.println(EXITING);
                 System.exit(0);
             }
             default: {
@@ -87,17 +99,17 @@ public class LoginMenu implements IMenuWithoutRole {
         Role accountRole = account.getAccountRole();
         switch (accountRole) {
             case ADMINISTRATOR: {
-                System.out.println(LOGGED_IN_AS + account.getUsername());
+                System.out.println(LOGGED_IN_AS + account.getUsername().toUpperCase());
                 ADMINISTRATOR_MENU.ranByRole(Role.ADMINISTRATOR);
                 break;
             }
             case MANAGER: {
-                System.out.println(LOGGED_IN_AS + account.getUsername());
+                System.out.println(LOGGED_IN_AS + account.getUsername().toUpperCase());
                 MANAGER_MENU.ranByRole(Role.MANAGER);
                 break;
             }
             case STAFF: {
-                System.out.println(LOGGED_IN_AS + account.getUsername());
+                System.out.println(LOGGED_IN_AS + account.getUsername().toUpperCase());
                 STAFF_MENU.ranByRole(Role.STAFF);
                 break;
             }

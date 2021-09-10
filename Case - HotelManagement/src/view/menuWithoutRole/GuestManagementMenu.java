@@ -1,6 +1,7 @@
 package view.menuWithoutRole;
 
 import controller.guest.GuestManagement;
+import model.Guest;
 
 public class GuestManagementMenu implements IMenuWithoutRole {
 
@@ -40,7 +41,7 @@ public class GuestManagementMenu implements IMenuWithoutRole {
 
     @Override
     public void handleChoice(String choice) {
-        boolean guestListIsEmpty = GUEST_MANAGEMENT.getGuestList().size() == 0;
+        boolean guestListIsEmpty = GUEST_MANAGEMENT.getGuestMap().size() == 0;
         switch (choice) {
             case "1": {
                 if (guestListIsEmpty) {
@@ -58,8 +59,9 @@ public class GuestManagementMenu implements IMenuWithoutRole {
                     System.out.println(SEARCH_GUEST);
                     System.out.print(ENTER_GUEST_ID);
                     String guestId = scanner.nextLine();
-                    if (GUEST_MANAGEMENT.existsGuestId(guestId)) {
-                        GUEST_MANAGEMENT.display(guestId);
+                    Guest guest = GUEST_MANAGEMENT.findGuest(guestId);
+                    if (guest != null) {
+                        System.out.println(guest);
                     } else {
                         System.out.println(GUEST_ID_NOT_EXISTED);
                     }

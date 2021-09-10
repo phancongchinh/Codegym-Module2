@@ -4,18 +4,18 @@ import controller.ioData.IODataManagement;
 
 import java.io.IOException;
 
-public class ExportImportMenu implements IMenuWithoutRole {
+public class IODataManagementMenu implements IMenuWithoutRole {
 
     private static final IODataManagement IO_DATA_MANAGEMENT = IODataManagement.getInstance();
 
-    private ExportImportMenu(){}
+    private IODataManagementMenu(){}
 
-    public static ExportImportMenu getInstance() {
+    public static IODataManagementMenu getInstance() {
         return ExportImportMenuHelper.INSTANCE;
     }
 
     private static class ExportImportMenuHelper{
-        private static final ExportImportMenu INSTANCE = new ExportImportMenu();
+        private static final IODataManagementMenu INSTANCE = new IODataManagementMenu();
     }
 
     @Override
@@ -47,7 +47,7 @@ public class ExportImportMenu implements IMenuWithoutRole {
                     IO_DATA_MANAGEMENT.exportData();
                 }
                 catch (IOException exception) {
-                    System.err.println(IO_EXCEPTION_DATA_EXPORTED_UNSUCCESSFULLY);
+                    System.out.println(IO_EXCEPTION_DATA_EXPORTED_UNSUCCESSFULLY);
                     break;
                 }
                 System.out.println(DATA_EXPORTED_SUCCESSFULLY);
@@ -58,7 +58,7 @@ public class ExportImportMenu implements IMenuWithoutRole {
                     IO_DATA_MANAGEMENT.importData();
                 }
                 catch (IOException exception) {
-                    System.err.println(IO_EXCEPTION_DATA_IMPORTED_UNSUCCESSFULLY);
+                    System.out.println(IO_EXCEPTION_DATA_IMPORTED_UNSUCCESSFULLY);
                     break;
                 }
                 System.out.println(DATA_IMPORTED_SUCCESSFULLY);

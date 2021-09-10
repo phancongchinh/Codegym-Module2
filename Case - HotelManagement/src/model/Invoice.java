@@ -87,7 +87,19 @@ public class Invoice {
     }
 
     public Double getTotalCharge() {
-        return totalDays() * this.getRoom().getPrice();
+        GuestLevel guestLevel = this.getGuest().getGuestLevel();
+        double discount = 0.0;
+        switch (guestLevel) {
+            case DIAMOND: {
+                discount = 0.2;
+                break;
+            }
+            case GOLD: {
+                discount = 0.1;
+                break;
+            }
+        }
+        return totalDays() * this.getRoom().getPrice() * (1 - discount);
     }
 
     @Override
@@ -98,7 +110,7 @@ public class Invoice {
                 staff.getStaffId() + "," +
                 invoiceDate + "," +
                 dueDate + "," +
-                getTotalCharge() + "," +
-                isPaid;
+                isPaid + "," +
+                getTotalCharge();
     }
 }

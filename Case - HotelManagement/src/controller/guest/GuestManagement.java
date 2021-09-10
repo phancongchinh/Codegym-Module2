@@ -5,18 +5,18 @@ import model.Guest;
 import model.GuestLevel;
 import model.PersonalInformation;
 
+import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Map;
 
 public class GuestManagement implements IGuestManagement {
 
     private static final PersonalInformationManagement PERSONAL_INFORMATION_MANAGEMENT = PersonalInformationManagement.getInstance();
 
-    private static final List<Guest> GUEST_LIST = new LinkedList<>();
+    private static final Map<String,Guest> GUEST_MAP = new HashMap<>();
 
-    public List<Guest> getGuestList() {
-        return GUEST_LIST;
+    public Map<String,Guest> getGuestMap() {
+        return GUEST_MAP;
     }
 
     private GuestManagement() {
@@ -42,25 +42,23 @@ public class GuestManagement implements IGuestManagement {
         if (guest == null) {
             return false;
         }
-        GUEST_LIST.add(guest);
+        GUEST_MAP.put(guest.getPersonalInformation().getId(),guest);
         return true;
     }
 
     @Override
     public void add(int index, Guest guest) {
-        GUEST_LIST.add(index, guest);
     }
 
     @Override
     public void display(String id) {
-        int index = indexOfGuest(id);
-        System.out.println(GUEST_LIST.get(index));
+        System.out.println(GUEST_MAP.get(id));
     }
 
     @Override
     public void displayAll() {
-        for (Guest guest : GUEST_LIST) {
-            System.out.println(guest);
+        for (String id : GUEST_MAP.keySet()) {
+            System.out.println(GUEST_MAP.get(id));
         }
     }
 
@@ -71,23 +69,17 @@ public class GuestManagement implements IGuestManagement {
 
     @Override
     public Guest remove(String id) {
-        int index = indexOfGuest(id);
-        return GUEST_LIST.remove(index);
+        return null;
     }
 
     @Override
-    public int indexOfGuest(String id) {
-        for (Guest guest : GUEST_LIST) {
-            if (guest.getPersonalInformation().getId().equals(id)) {
-                return GUEST_LIST.indexOf(guest);
+    public Guest findGuest(String id) {
+        for (String guestId : GUEST_MAP.keySet()) {
+            if (guestId.equals(id)) {
+                return GUEST_MAP.get(guestId);
             }
         }
-        return -1;
-    }
-
-    @Override
-    public boolean existsGuestId(String id) {
-        return indexOfGuest(id) != -1;
+        return null;
     }
 
     @Override

@@ -39,6 +39,7 @@ public class InvoiceManagement implements IInvoiceManagement {
             return false;
         }
         INVOICE_LIST.add(invoice);
+        // set Room State to be OCCUPIED
         int index = ROOM_MANAGEMENT.indexOfRoom(invoice.getRoom().getRoomId());
         ROOM_MANAGEMENT.getRoomList().get(index).setRoomState(RoomState.OCCUPIED);
         return true;
@@ -47,6 +48,7 @@ public class InvoiceManagement implements IInvoiceManagement {
     @Override
     public void add(int index, Invoice invoice) {
         INVOICE_LIST.add(index, invoice);
+        // set Room State to be OCCUPIED
         int roomIndex = ROOM_MANAGEMENT.indexOfRoom(invoice.getRoom().getRoomId());
         ROOM_MANAGEMENT.getRoomList().get(roomIndex).setRoomState(RoomState.OCCUPIED);
     }
@@ -110,11 +112,11 @@ public class InvoiceManagement implements IInvoiceManagement {
             System.out.println(INVOICE_ID_NOT_EXISTED);
             return false;
         }
+        int index = indexOfInvoice(invoiceId);
         //remove first
         Invoice removedInvoice = remove(invoiceId);
 
         // init a new one
-        int index = indexOfInvoice(invoiceId);
         System.out.println(GATHERING_NEW_INFORMATION_FOR_UPDATING);
         Invoice newInvoice = initFromKeyboard();
         if (newInvoice == null) {
@@ -145,6 +147,13 @@ public class InvoiceManagement implements IInvoiceManagement {
 
         // set the room state be EMPTY
         invoice.getRoom().setRoomState(RoomState.EMPTY);
+
+        // add guest to guest list once his invoice is paid! :v
+        Guest guestFromInvoice = invoice.getGuest();
+        if (!GUEST_MANAGEMENT.add(guestFromInvoice)) {
+            Guest guestFromList = GUEST_MANAGEMENT.findGuest(guestFromInvoice.getPersonalInformation().getId());
+            guestFromList.setExpenditure(guestFromList.getExpenditure() + invoice.getTotalCharge());
+        }
 
         // add totalCharge to staff's sales
         Staff staff = invoice.getStaff();
