@@ -198,11 +198,11 @@ public class InvoiceManagement implements IInvoiceManagement {
     }
 
     @Override
-    public HashSet<String> getMonthEnums() {
+    public boolean isMonthValid(String string) {
         HashSet<String> values = new HashSet<>();
         for (Month month : Month.values()) {
             values.add(month.name());
         }
-        return values;
+        return values.contains(string.toUpperCase());
     }
 }

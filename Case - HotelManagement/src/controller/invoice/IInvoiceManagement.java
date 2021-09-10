@@ -4,8 +4,6 @@ import controller.IGeneralManagement;
 import model.Invoice;
 import model.Month;
 
-import java.util.HashSet;
-
 public interface IInvoiceManagement extends IGeneralManagement<Invoice> {
 
     int indexOfInvoice(String invoiceId);
@@ -16,5 +14,5 @@ public interface IInvoiceManagement extends IGeneralManagement<Invoice> {
 
     void payTheInvoice(String invoiceId);
 
-    HashSet<String> getMonthEnums();
+    boolean isMonthValid(String month);
 }

@@ -127,9 +127,9 @@ public class InvoiceManagementMenu implements IMenuWithoutRole {
                 if (isInvoiceList(empty)) break;
                 System.out.println(LIST_INVOICES_BY_MONTH);
                 System.out.print(ENTER_MONTH);
-                String inputMonth = scanner.nextLine().toUpperCase();
-                if (INVOICE_MANAGEMENT.getMonthEnums().contains(inputMonth)) {
-                    INVOICE_MANAGEMENT.calculateSalesByMonth(Month.valueOf(inputMonth));
+                String inputMonth = scanner.nextLine();
+                if (INVOICE_MANAGEMENT.isMonthValid(inputMonth)) {
+                    INVOICE_MANAGEMENT.calculateSalesByMonth(Month.valueOf(inputMonth.toUpperCase()));
                 } else {
                     System.out.println(MONTH_NAME_DOES_NOT_EXIST);
                 }

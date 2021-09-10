@@ -1,7 +1,5 @@
 package model;
 
-import java.io.Serializable;
-
 public enum Month {
     JANUARY,
     FEBRUARY,
